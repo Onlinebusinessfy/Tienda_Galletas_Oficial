@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Pago</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Tienda de Galletas</a>
+        </div>
+    </nav>
+
+    <h1>PAGO:</h1>
+    <div class="custom-form container mt-4">
+        <form method="post" action="{% url 'pago_create' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Orden:</label>
+                <select name="pedido_id" class="form-control">
+                    {% for orden in ordenes %}
+                    <option value="{{ orden.id }}">Orden #{{ orden.id }} - {{ orden.cliente.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Dirección de Envío:</label>
+                <input type="text" name="direccion_envio" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Fecha de Envío:</label>
+                <input type="date" name="fecha_envio" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Estado:</label>
+                <select name="estado" class="form-control">
+                    <option value="PAGADO">Pagado</option>
+                    <option value="NO_PAGADO">No pagado</option>
+                    <option value="EN_PROCESO">En proceso</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Pago</button>
+        </form>
+    </div>
+</body>
+</html>
