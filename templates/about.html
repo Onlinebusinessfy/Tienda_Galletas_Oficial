@@ -1,42 +1,32 @@
 {% extends 'base.html' %}
 
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <div class="container py-5">
-        <h1 class="text-center mb-4">Sobre Nuestra Tienda de Galletas</h1>
-        
-        <p class="lead text-center mb-5">
-            En <strong>Tienda de Galletas</strong> nos apasiona crear momentos dulces que alegren tu día. Desde nuestras clásicas galletas de mantequilla hasta nuestras innovadoras combinaciones, cada pieza es elaborada con ingredientes de la más alta calidad y mucho amor.
-        </p>
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-4">Sobre Nuestra Tienda de Galletas</h1>
+    
+    <p class="lead text-center mb-5">
+        En <strong>Tienda de Galletas</strong> nos apasiona crear momentos dulces que alegren tu día. Desde nuestras clásicas galletas de mantequilla hasta nuestras innovadoras combinaciones, cada pieza es elaborada con ingredientes de la más alta calidad y mucho amor.
+    </p>
 
-        <div class="row text-center">
-            <div class="col-md-4 mb-4">
-                <h3>Calidad</h3>
-                <p>Nuestras galletas son elaboradas con ingredientes frescos y naturales, asegurando un sabor inigualable en cada bocado.</p>
-            </div>
-            <div class="col-md-4 mb-4">
-                <h3>Variedad</h3>
-                <p>Ofrecemos una amplia gama de sabores y diseños, perfectos para cualquier ocasión: cumpleaños, eventos o simplemente para consentirte.</p>
-            </div>
-            <div class="col-md-4 mb-4">
-                <h3>Pasión</h3>
-                <p>Cada galleta es hecha a mano con dedicación y amor, porque creemos que un detalle dulce puede hacer la diferencia.</p>
-            </div>
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <h3>Calidad</h3>
+            <p>Nuestras galletas son elaboradas con ingredientes frescos y naturales, asegurando un sabor inigualable en cada bocado.</p>
         </div>
-
-        <div class="text-center mt-5">
-            <p class="mb-1">¡Visítanos y descubre el placer de lo artesanal!</p>
-            <p>📍 Calle Calzada Cetys #123, Tijuana Baja California, México</p>
-            <p>📞 Tel: +52 664 399 6945 | ✉️ Email: dalgona@gmail.com.mx</p>
+        <div class="col-md-4 mb-4">
+            <h3>Variedad</h3>
+            <p>Ofrecemos una amplia gama de sabores y diseños, perfectos para cualquier ocasión: cumpleaños, eventos o simplemente para consentirte.</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <h3>Pasión</h3>
+            <p>Cada galleta es hecha a mano con dedicación y amor, porque creemos que un detalle dulce puede hacer la diferencia.</p>
         </div>
     </div>
-</body>
-</html>
+
+    <div class="text-center mt-5">
+        <p class="mb-1">¡Visítanos y descubre el placer de lo artesanal!</p>
+        <p>📍 Calle Calzada Cetys #123, Tijuana Baja California, México</p>
+        <p>📞 Tel: +52 664 399 6945 | ✉️ Email: dalgona@gmail.com.mx</p>
+    </div>
+</div>
+{% endblock %}

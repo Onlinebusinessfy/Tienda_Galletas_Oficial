@@ -1,44 +1,33 @@
 {% extends 'base.html' %}
 
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario Galleta</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Tienda de Galletas</a>
-        </div>
-    </nav>
+{% block content %}
+<h1 class="mt-4">GALLETA:</h1>
 
-    <h1>GALLETA:</h1>
-    <div class="custom-form container mt-4">
-        <form method="post" action="{% url 'galleta_create' %}">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label class="form-label">Nombre:</label>
-                <input type="text" name="nombre" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Descripción:</label>
-                <input type="text" name="descripcion" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Precio:</label>
-                <input type="number" name="precio" class="form-control" step="0.01" min="0">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Stock:</label>
-                <input type="number" name="stock" class="form-control" min="0">
-            </div>
-            <button type="submit" class="btn btn-primary">Guardar Galleta</button>
-        </form>
-    </div>
-</body>
-</html>
+<div class="custom-form container mt-4">
+    <form method="post" action="{% url 'galleta_create' %}">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Nombre:</label>
+            <input type="text" name="nombre" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Descripción:</label>
+            <input type="text" name="descripcion" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Precio:</label>
+            <input type="number" name="precio" class="form-control" step="0.01" min="0">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Stock:</label>
+            <input type="number" name="stock" class="form-control" min="0">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar Galleta</button>
+    </form>
+</div>
+{% endblock %}
