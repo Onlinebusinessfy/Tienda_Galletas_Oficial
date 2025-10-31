@@ -9,7 +9,7 @@ def formulario(request):
     return render(request, 'formulario.html')
 
 def about(request):
-    return render(request, 'about')
+    return render(request, 'about.html')
 
 def galleta(request):
     return render(request, 'galleta.html')
