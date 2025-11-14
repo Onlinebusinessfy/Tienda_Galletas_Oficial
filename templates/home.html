@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Contenido Principal -->
+<div class="container py-4">
+    <!-- Bienvenida y Carousel -->
+    <h1 class="text-center mb-4">Bienvenido a <strong>Tienda de Galletas Dalgona</strong></h1>
+
+    <div id="carouselTiendaGalletas" class="carousel slide mb-5" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselTiendaGalletas" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselTiendaGalletas" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselTiendaGalletas" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://via.placeholder.com/1200x500?text=Galletas+Caseras" class="d-block w-100" alt="Galletas Caseras">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Delicias Caseras</h5>
+                    <p>El sabor de las galletas recién horneadas directamente a tu mesa.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://via.placeholder.com/1200x500?text=Galletas+Personalizadas" class="d-block w-100" alt="Galletas Personalizadas">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Galletas Personalizadas</h5>
+                    <p>Diseños únicos para cumpleaños, bodas y eventos especiales.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://via.placeholder.com/1200x500?text=Nuevos+Sabores" class="d-block w-100" alt="Nuevos Sabores">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Nuevos Sabores</h5>
+                    <p>Experimenta nuestra variedad de galletas gourmet que enamoran.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselTiendaGalletas" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselTiendaGalletas" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+
+    <!-- Sobre Nosotros -->
+    <section class="mb-5">
+        <h2 class="text-center mb-3">Sobre Nosotros</h2>
+        <p class="text-center lead">En <strong>D’Galleta</strong> nos apasiona crear momentos dulces que alegren tu día. Cada galleta es hecha a mano con los mejores ingredientes, amor y dedicación. Nuestra misión es llevar sonrisas a tu mesa con sabores auténticos y recetas tradicionales con un toque moderno.</p>
+    </section>
+
+    <!-- Productos Destacados -->
+    <section class="mb-5">
+        <h2 class="text-center mb-4">Nuestros Productos Destacados</h2>
+        <div class="row text-center">
+            <div class="col-md-4 mb-3">
+                <img src="https://via.placeholder.com/250x250?text=Galleta+Chocolate" class="rounded mb-2" alt="Galleta Chocolate">
+                <h5>Galleta de Chocolate</h5>
+                <p>Clásica y deliciosa, con trozos de chocolate semi-amargo.</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <img src="https://via.placeholder.com/250x250?text=Galleta+Vainilla" class="rounded mb-2" alt="Galleta Vainilla">
+                <h5>Galleta de Vainilla</h5>
+                <p>Suave y dulce, perfecta para cualquier momento del día.</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <img src="https://via.placeholder.com/250x250?text=Galleta+Gourmet" class="rounded mb-2" alt="Galleta Gourmet">
+                <h5>Galleta Gourmet</h5>
+                <p>Combinaciones únicas como pistache, lavanda o caramelo salado.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section class="mb-5 bg-light p-4 rounded">
+        <h2 class="text-center mb-4">Lo que dicen nuestros clientes</h2>
+        <div class="row text-center">
+            <div class="col-md-4 mb-3">
+                <blockquote class="blockquote">
+                    <p>"Las galletas son increíbles, ¡el chocolate se derrite en la boca!"</p>
+                    <footer class="blockquote-footer">Ana López</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4 mb-3">
+                <blockquote class="blockquote">
+                    <p>"Me encantaron las galletas personalizadas para el cumpleaños de mi hija."</p>
+                    <footer class="blockquote-footer">Carlos Martínez</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4 mb-3">
+                <blockquote class="blockquote">
+                    <p>"Entrega rápida y productos de excelente calidad. 100% recomendable."</p>
+                    <footer class="blockquote-footer">María Fernández</footer>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto Rápido -->
+    <section class="mb-5">
+        <h2 class="text-center mb-4">Contáctanos</h2>
+        <p class="text-center">📞 Teléfono: +52 664 399 6945 | ✉️ Email: contacto@dgalleta.com.mx</p>
+        <p class="text-center">📍 Dirección: Calle Calzada Cetys #123, Tijuana, Baja California, México</p>
+        <div class="text-center">
+            <a href="#" class="btn btn-primary mx-1">Nuestros Productos</a>
+            <a href="#" class="btn btn-outline-secondary mx-1">Hacer Pedido</a>
+        </div>
+    </section>
+</div> <!-- FIN DEL CONTAINER -->
+
+<!-- Footer -->
+<footer class="bg-dark text-white mt-5 py-4">
+    <div class="container-fluid text-center">
+        <div class="row">
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h5>Dalgona</h5>
+                <p>Deliciosas galletas artesanales para alegrar tu día.</p>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h5>Enlaces</h5>
+                <p>
+                    <a href="#" class="text-white text-decoration-none mx-2">Inicio</a> |
+                    <a href="#" class="text-white text-decoration-none mx-2">Productos</a> |
+                    <a href="#" class="text-white text-decoration-none mx-2">Pedidos</a> |
+                    <a href="#" class="text-white text-decoration-none mx-2">Contacto</a>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <h5>Contacto</h5>
+                <p>📍 Calle Calzada Cetys #123, Tijuana, BC</p>
+                <p>📞 +52 664 399 6945</p>
+                <p>✉️ dalgona@gmail.com.mx</p>
+            </div>
+        </div>
+        <hr class="bg-white">
+        <p class="mb-0">&copy; 2025 D’Galleta - Todos los derechos reservados</p>
+    </div>
+</footer>
+
+{% endblock %}

@@ -1,36 +1,101 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="mt-4">CLIENTE:</h1>
 
-<div class="custom-form container mt-4">
-    <form>
+<style>
+/* --- CARD --- */
+.client-card {
+    max-width: 600px;
+    margin: auto;
+    padding: 28px;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+    border: 1px solid #e7e7e7;
+    animation: fadeIn 0.4s ease;
+}
+
+/* --- TITULO --- */
+.client-title {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: #2c2c2c;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+/* --- INPUTS --- */
+.form-control {
+    border-radius: 12px;
+    border: 1.5px solid #dcdcdc;
+    padding: 10px;
+    transition: 0.25s ease;
+}
+
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 5px rgba(13, 110, 253, 0.35);
+}
+
+/* --- BOTÓN --- */
+.btn-save {
+    background: linear-gradient(135deg, #0d6efd, #0a58ca);
+    border: none;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    border-radius: 14px;
+    transition: 0.2s ease;
+}
+
+.btn-save:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #2b7bff, #0f5bd9);
+}
+
+/* --- ANIMACIÓN --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<h1 class="client-title mt-4">👤 Registrar Cliente</h1>
+
+<div class="client-card">
+
+    <form method="post">
+        {% csrf_token %}
+
         <div class="mb-3">
-            <label for="usuario" class="form-label">Usuario:</label>
-            <input type="text" class="form-control" id="usuario" aria-describedby="texto">
+            <label class="form-label fw-semibold">Usuario</label>
+            <input type="text" name="usuario" class="form-control" required placeholder="Nombre del cliente">
         </div>
 
         <div class="mb-3">
-            <label for="telefono" class="form-label">Teléfono:</label>
-            <input type="tel" class="form-control" id="telefono">
+            <label class="form-label fw-semibold">Teléfono</label>
+            <input type="tel" name="telefono" class="form-control" placeholder="Ej: 5522334455">
         </div>
 
         <div class="mb-3">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="email">
+            <label class="form-label fw-semibold">Email</label>
+            <input type="email" name="email" class="form-control" placeholder="correo@ejemplo.com">
         </div>
 
         <div class="mb-3">
-            <label for="direccion" class="form-label">Dirección:</label>
-            <input type="text" class="form-control" id="direccion">
+            <label class="form-label fw-semibold">Dirección</label>
+            <input type="text" name="direccion" class="form-control" placeholder="Calle, número, colonia">
         </div>
 
         <div class="mb-3">
-            <label for="fecha" class="form-label">Fecha de registro:</label>
-            <input type="datetime-local" class="form-control" id="fecha">
+            <label class="form-label fw-semibold">Fecha de registro</label>
+            <input type="datetime-local" name="fecha_registro" class="form-control">
         </div>
 
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-save w-100 text-white mt-2">
+            Guardar Cliente
+        </button>
     </form>
 </div>
+
 {% endblock %}
