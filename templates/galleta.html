@@ -1,47 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<<<<<<< HEAD
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Lista de Galletas 🍪</h1>
-
-    <!-- Botón para crear una nueva galleta -->
-    <div class="text-end mb-3">
-        <a href="{% url 'galleta_create' %}" class="btn btn-success">+ Agregar Galleta</a>
-    </div>
-
-    {% if galletas %}
-        <table class="table table-striped table-bordered shadow-sm">
-            <thead class="table-dark text-center">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Precio ($)</th>
-                    <th>Stock</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody class="text-center">
-                {% for galleta in galletas %}
-                <tr>
-                    <td>{{ galleta.nombre }}</td>
-                    <td>{{ galleta.descripcion }}</td>
-                    <td>{{ galleta.precio }}</td>
-                    <td>{{ galleta.stock }}</td>
-                    <td>
-                        <a href="{% url 'galleta_update' galleta.id %}" class="btn btn-sm btn-warning">Editar</a>
-                        <a href="{% url 'galleta_delete' galleta.id %}" class="btn btn-sm btn-danger">Eliminar</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <div class="alert alert-info text-center mt-4">
-            No hay galletas registradas todavía 🍪
-        </div>
-    {% endif %}
-=======
 
 <style>
 /* ------- CARD ------- */
@@ -130,9 +89,9 @@ textarea {
 
         <!-- IMAGEN PREVIEW (FIJA) -->
         <img id="preview" 
-             src="https://images.unsplash.com/photo-1436564989038-18b9958df72b"
-             class="cookie-preview"
-             alt="Vista previa de galleta">
+            src="https://images.unsplash.com/photo-1436564989038-18b9958df72b"
+            class="cookie-preview"
+            alt="Vista previa de galleta">
 
         <form method="post">
             {% csrf_token %}
@@ -164,7 +123,6 @@ textarea {
             </button>
         </form>
     </div>
->>>>>>> 0c53959b179b9e433fc615f781a3ee3c045af831
 </div>
 
 {% endblock %}
