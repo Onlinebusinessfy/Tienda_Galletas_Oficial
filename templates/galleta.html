@@ -1,33 +1,128 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="mt-4">GALLETA:</h1>
 
-<div class="custom-form container mt-4">
-    <form method="post">
-        {% csrf_token %}
+<style>
+/* ------- CARD ------- */
+.cookie-card {
+    border-radius: 22px;
+    background: #ffffff;
+    border: 1px solid #e6e6e6;
+    padding: 32px;
+    transition: 0.35s ease;
+}
 
-        <div class="mb-3">
-            <label class="form-label">Nombre:</label>
-            <input type="text" name="nombre" class="form-control" required>
-        </div>
+.cookie-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
 
-        <div class="mb-3">
-            <label class="form-label">Descripción:</label>
-            <input type="text" name="descripcion" class="form-control">
-        </div>
+/* ------- TITULO ------- */
+.cookie-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #3b2f2f;
+    letter-spacing: -0.5px;
+    animation: fadeIn 0.8s ease forwards;
+}
 
-        <div class="mb-3">
-            <label class="form-label">Precio:</label>
-            <input type="number" name="precio" class="form-control" step="0.01" min="0">
-        </div>
+/* ------- PREVIEW DE IMAGEN ------- */
+.cookie-preview {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 20px auto;
+    display: block;
+    border: 4px solid #f0e6e0;
+    animation: popIn 0.5s ease forwards;
+}
 
-        <div class="mb-3">
-            <label class="form-label">Stock:</label>
-            <input type="number" name="stock" class="form-control" min="0">
-        </div>
+/* ------- INPUTS ------- */
+.form-control {
+    border-radius: 12px;
+    border: 1.5px solid #d5d5d5;
+    transition: 0.25s ease;
+}
 
-        <button type="submit" class="btn btn-primary">Guardar Galleta</button>
-    </form>
+.form-control:focus {
+    border-color: #7c4a2d;
+    box-shadow: 0 0 6px rgba(124, 74, 45, 0.4);
+}
+
+/* ------- BOTÓN ------- */
+.btn-cookie {
+    background: linear-gradient(135deg, #59321c, #3b2414);
+    border: none;
+    padding: 12px 0;
+    border-radius: 14px;
+    font-size: 1.1rem;
+    transition: 0.25s ease;
+}
+
+.btn-cookie:hover {
+    background: linear-gradient(135deg, #6c3b22, #4a2e1a);
+    transform: translateY(-2px);
+}
+
+/* ------- ANIMACIONES ------- */
+@keyframes popIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Bloquear que el textarea se pueda agrandar */
+textarea {
+    resize: none;
+}
+</style>
+
+<div class="container mt-5" style="max-width: 650px;">
+    <div class="cookie-card">
+
+        <h2 class="text-center cookie-title mb-4">🍪 Registrar Galleta</h2>
+
+        <!-- IMAGEN PREVIEW (FIJA) -->
+        <img id="preview" 
+             src="https://images.unsplash.com/photo-1436564989038-18b9958df72b"
+             class="cookie-preview"
+             alt="Vista previa de galleta">
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Nombre</label>
+                <input type="text" name="nombre" class="form-control" required placeholder="Ej: Galleta de chispas">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Descripción</label>
+                <textarea name="descripcion" class="form-control" rows="2" placeholder="Describe la galleta..."></textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Precio ($)</label>
+                    <input type="number" name="precio" class="form-control" step="0.01" min="0" placeholder="Ej: 15.00">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Stock</label>
+                    <input type="number" name="stock" class="form-control" min="0" placeholder="Ej: 40">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-cookie text-white w-100 mt-2">
+                Guardar galleta 🍪
+            </button>
+        </form>
+    </div>
 </div>
+
 {% endblock %}
