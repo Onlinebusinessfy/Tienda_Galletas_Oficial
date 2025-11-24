@@ -31,7 +31,7 @@ class Pago(models.Model):
     ]
 
     def __str__(self):
-       return f"{self.estado}"
+        return f"{self.estado}"
 
 class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
