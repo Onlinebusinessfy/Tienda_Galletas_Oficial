@@ -14,6 +14,9 @@ def about(request):
 def galleta(request):
     return render(request, 'galleta.html')
 
+def galleta_create(request):
+    return render(request, "galleta_create.html")
+
 def orden(request):
     return render(request, 'orden.html')
 

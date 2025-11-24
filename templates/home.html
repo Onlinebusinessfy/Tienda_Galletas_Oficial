@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+
 {% block content %}
 
 <!-- Contenido Principal -->
@@ -54,25 +57,37 @@
 
     <!-- Productos Destacados -->
     <section class="mb-5">
-        <h2 class="text-center mb-4">Nuestros Productos Destacados</h2>
-        <div class="row text-center">
-            <div class="col-md-4 mb-3">
-                <img src="https://via.placeholder.com/250x250?text=Galleta+Chocolate" class="rounded mb-2" alt="Galleta Chocolate">
-                <h5>Galleta de Chocolate</h5>
-                <p>Clásica y deliciosa, con trozos de chocolate semi-amargo.</p>
-            </div>
-            <div class="col-md-4 mb-3">
-                <img src="https://via.placeholder.com/250x250?text=Galleta+Vainilla" class="rounded mb-2" alt="Galleta Vainilla">
-                <h5>Galleta de Vainilla</h5>
-                <p>Suave y dulce, perfecta para cualquier momento del día.</p>
-            </div>
-            <div class="col-md-4 mb-3">
-                <img src="https://via.placeholder.com/250x250?text=Galleta+Gourmet" class="rounded mb-2" alt="Galleta Gourmet">
-                <h5>Galleta Gourmet</h5>
-                <p>Combinaciones únicas como pistache, lavanda o caramelo salado.</p>
-            </div>
+    <h2 class="text-center mb-4">Nuestros Productos Destacados</h2>
+
+    <div class="row text-center">
+
+        <div class="col-md-4 mb-3">
+            <img src="{% static 'images/chocolate-chip-cookies-940428_1280.jpg' %}"
+                class="rounded img-fluid mb-2 product-img"
+                alt="Galleta Chocolate">
+            <h5>Galleta de Chocolate</h5>
+            <p>Clásica y deliciosa, con trozos de chocolate semi-amargo.</p>
         </div>
-    </section>
+
+        <div class="col-md-4 mb-3">
+            <img src="{% static 'images/cookie-1832169_1280.jpg' %}"
+                class="rounded img-fluid mb-2 product-img"
+                alt="Galleta Vainilla">
+            <h5>Galleta de Vainilla</h5>
+            <p>Suave y dulce, perfecta para cualquier momento del día.</p>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <img src="{% static 'images/christmas-cookies-2975570_1280.jpg' %}"
+                class="rounded img-fluid mb-2 product-img"
+                alt="Galleta Gourmet">
+            <h5>Galleta Gourmet</h5>
+            <p>Combinaciones únicas como pistache, lavanda o caramelo salado.</p>
+        </div>
+
+    </div>
+</section>
+
 
     <!-- Testimonios -->
     <section class="mb-5 bg-light p-4 rounded">

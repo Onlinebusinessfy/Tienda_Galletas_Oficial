@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'admin_core_TIENDA_GALLETAS',
+    'accounts',
 ]
 
 MIDDLEWARE = [
