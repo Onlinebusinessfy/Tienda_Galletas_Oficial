@@ -8,3 +8,5 @@ admin.site.register(Orden)
 admin.site.register(Pago)
 admin.site.register(Venta)
 admin.site.register(DetalleVenta)
+admin.site.register(Carrito)
+
