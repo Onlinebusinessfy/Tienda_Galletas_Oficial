@@ -1,101 +1,172 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contacto - Dalgona Cookies{% endblock %}
 
 {% block content %}
-
-<style>
-/* --- CARD --- */
-.client-card {
-    max-width: 600px;
-    margin: auto;
-    padding: 28px;
-    border-radius: 18px;
-    background: #ffffff;
-    box-shadow: 0 8px 22px rgba(0,0,0,0.08);
-    border: 1px solid #e7e7e7;
-    animation: fadeIn 0.4s ease;
-}
-
-/* --- TITULO --- */
-.client-title {
-    font-size: 1.9rem;
-    font-weight: 800;
-    color: #2c2c2c;
-    text-align: center;
-    margin-bottom: 20px;
-    letter-spacing: -0.5px;
-}
-
-/* --- INPUTS --- */
-.form-control {
-    border-radius: 12px;
-    border: 1.5px solid #dcdcdc;
-    padding: 10px;
-    transition: 0.25s ease;
-}
-
-.form-control:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 5px rgba(13, 110, 253, 0.35);
-}
-
-/* --- BOTÓN --- */
-.btn-save {
-    background: linear-gradient(135deg, #0d6efd, #0a58ca);
-    border: none;
-    padding: 12px 0;
-    font-size: 1.1rem;
-    border-radius: 14px;
-    transition: 0.2s ease;
-}
-
-.btn-save:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(135deg, #2b7bff, #0f5bd9);
-}
-
-/* --- ANIMACIÓN --- */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-</style>
-
-<h1 class="client-title mt-4">👤 Registrar Cliente</h1>
-
-<div class="client-card">
-
-    <form method="post">
-        {% csrf_token %}
-
-        <div class="mb-3">
-            <label class="form-label fw-semibold">Usuario</label>
-            <input type="text" name="usuario" class="form-control" required placeholder="Nombre del cliente">
+<!-- Header Contacto -->
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); border-bottom: 1px solid #eaeaea;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-5 fw-bold mb-3" style="color: #2c3e50;">
+                    Contáctanos
+                </h1>
+                <p class="lead mb-4" style="color: #7f8c8d;">
+                    ¿Tienes preguntas, sugerencias o comentarios? Estamos aquí para ayudarte. Escríbenos y te responderemos lo antes posible.
+                </p>
+                <div class="d-flex align-items-center">
+                    <div class="me-4">
+                        <i class="fas fa-headset fa-2x" style="color: #8b5a2b;"></i>
+                    </div>
+                    <div>
+                        <h6 style="color: #2c3e50; margin-bottom: 5px;">Soporte Personalizado</h6>
+                        <p class="small mb-0" style="color: #7f8c8d;">Te atendemos en menos de 24 horas</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div style="width: 200px; height: 200px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                    <i class="fas fa-envelope-open-text" style="color: white; font-size: 5rem;"></i>
+                </div>
+            </div>
         </div>
-
-        <div class="mb-3">
-            <label class="form-label fw-semibold">Teléfono</label>
-            <input type="tel" name="telefono" class="form-control" placeholder="Ej: 5522334455">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label fw-semibold">Email</label>
-            <input type="email" name="email" class="form-control" placeholder="correo@ejemplo.com">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label fw-semibold">Dirección</label>
-            <input type="text" name="direccion" class="form-control" placeholder="Calle, número, colonia">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label fw-semibold">Fecha de registro</label>
-            <input type="datetime-local" name="fecha_registro" class="form-control">
-        </div>
-
-        <button type="submit" class="btn btn-save w-100 text-white mt-2">
-            Guardar Cliente
-        </button>
-    </form>
+    </div>
 </div>
 
-{% endblock %}
+<!-- Formulario de Contacto -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body p-4 p-lg-5">
+                    {% if messages %}
+                    <div class="mb-4">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>{{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <form method="POST" id="contactForm">
+                        {% csrf_token %}
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold" style="color: #2c3e50;">
+                                    <i class="fas fa-user me-2" style="color: #8b5a2b;"></i>Nombre Completo
+                                </label>
+                                <input type="text" name="nombre" class="form-control" placeholder="Tu nombre" required style="border-color: #e0e0e0;">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold" style="color: #2c3e50;">
+                                    <i class="fas fa-envelope me-2" style="color: #8b5a2b;"></i>Correo Electrónico
+                                </label>
+                                <input type="email" name="email" class="form-control" placeholder="tu@email.com" required style="border-color: #e0e0e0;">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold" style="color: #2c3e50;">
+                                    <i class="fas fa-tag me-2" style="color: #8b5a2b;"></i>Asunto
+                                </label>
+                                <input type="text" name="asunto" class="form-control" placeholder="¿En qué podemos ayudarte?" required style="border-color: #e0e0e0;">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold" style="color: #2c3e50;">
+                                    <i class="fas fa-comment-dots me-2" style="color: #8b5a2b;"></i>Mensaje
+                                </label>
+                                <textarea name="mensaje" class="form-control" rows="6" placeholder="Escribe tu mensaje aquí..." required style="border-color: #e0e0e0;"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="newsletter" style="border-color: #8b5a2b;">
+                                    <label class="form-check-label" for="newsletter" style="color: #7f8c8d;">
+                                        Suscribirme al newsletter para recibir ofertas exclusivas
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-lg w-100" style="background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); color: white; border: none;">
+                                    <i class="fas fa-paper-plane me-2"></i>Enviar Mensaje
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Información de Contacto -->
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-map-marker-alt fa-2x" style="color: white;"></i>
+                        </div>
+                    </div>
+                    <h5 style="color: #2c3e50;">Visítanos</h5>
+                    <p class="text-muted mb-0">
+                        Calle Galletas 123<br>
+                        Santiago, Chile
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-phone fa-2x" style="color: white;"></i>
+                        </div>
+                    </div>
+                    <h5 style="color: #2c3e50;">Llámarnos</h5>
+                    <p class="text-muted mb-0">
+                        +56 9 1234 5678<br>
+                        Lun-Vie: 9:00-18:00
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-envelope fa-2x" style="color: white;"></i>
+                        </div>
+                    </div>
+                    <h5 style="color: #2c3e50;">Escríbenos</h5>
+                    <p class="text-muted mb-0">
+                        info@dalgona-cookies.com<br>
+                        ventas@dalgona-cookies.com
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Preguntas Frecuentes -->
+<div class="container-fluid py-5" style="background-color: #f8f9fa;">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col">
+                <h2 class="fw-bold text-center" style="color: #2c3e50;">Preguntas Frecuentes</h2>
+                <p class="text-center text-muted">Resolvemos tus dudas más comunes</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item border-0 mb-3">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" style="color: #2c3e50;">
+                                <i class="fas fa-shipping-fast me-3" style="
