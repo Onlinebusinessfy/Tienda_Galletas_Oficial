@@ -1,9 +1,593 @@
-<h2>Registro</h2>
+{% extends 'base.html' %}
+{% load static %}
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Crear cuenta</button>
-</form>
+{% block title %}Registro - Dalgona Cookies{% endblock %}
 
-<p>¿Ya tienes cuenta? <a href="{% url 'login' %}">Iniciar sesión</a></p>
+{% block content %}
+<!-- Hero Section Elegante -->
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #f9f5f0 0%, #e8d8c3 100%);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="logo-circle me-3" style="width: 70px; height: 70px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-user-plus" style="color: white; font-size: 2rem;"></i>
+                    </div>
+                    <div>
+                        <h1 class="display-5 fw-bold mb-2" style="color: #2c3e50;">
+                            Crear Cuenta
+                        </h1>
+                        <p class="lead mb-0" style="color: #7a6454;">
+                            Únete a la familia Dalgona
+                        </p>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-bolt me-2" style="color: #e8a628;"></i>
+                            <span class="small" style="color: #7f8c8d;">Registro en 1 minuto</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-gift me-2" style="color: #8b5a2b;"></i>
+                            <span class="small" style="color: #7f8c8d;">Regalo de bienvenida</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="position-relative d-inline-block">
+                    <div style="width: 180px; height: 180px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-users" style="color: white; font-size: 4rem;"></i>
+                    </div>
+                    <div class="position-absolute bottom-0 end-0 bg-white rounded-circle p-2 shadow-lg" style="width: 60px; height: 60px;">
+                        <i class="fas fa-star" style="color: #8b5a2b;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contenido Principal -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-xl-10">
+            <div class="card border-0 shadow-lg overflow-hidden" style="border-radius: 20px;">
+                <div class="row g-0">
+                    <!-- Formulario de Registro -->
+                    <div class="col-lg-8 p-4 p-lg-5">
+                        <div class="card-body">
+                            <div class="text-center mb-4">
+                                <h3 class="fw-bold" style="color: #2c3e50;">
+                                    <i class="fas fa-user-plus me-2" style="color: #8b5a2b;"></i>
+                                    Completa tus datos
+                                </h3>
+                                <p class="text-muted">Todos los campos son obligatorios</p>
+                            </div>
+                            
+                            <form method="POST" id="registerForm" novalidate>
+                                {% csrf_token %}
+                                
+                                {% if form.errors %}
+                                <div class="alert alert-warning alert-dismissible fade show mb-4" role="alert" style="border-radius: 12px; border-left: 4px solid #e8a628;">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-exclamation-triangle me-3 fa-lg"></i>
+                                        <div>
+                                            <h6 class="mb-1">Corrige los siguientes errores:</h6>
+                                            <ul class="mb-0 ps-3 small">
+                                                {% for field in form %}
+                                                    {% for error in field.errors %}
+                                                    <li>{{ field.label }}: {{ error }}</li>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                                {% endif %}
+                                
+                                <!-- Username -->
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold d-flex align-items-center" style="color: #2c3e50;">
+                                        <i class="fas fa-user me-2" style="color: #8b5a2b;"></i>
+                                        Nombre de usuario *
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0" style="border-color: #e0e0e0; border-radius: 10px 0 0 10px;">
+                                            <i class="fas fa-at" style="color: #8b5a2b;"></i>
+                                        </span>
+                                        <input type="text" 
+                                               name="username" 
+                                               id="id_username" 
+                                               class="form-control border-start-0" 
+                                               placeholder="Elige un nombre de usuario"
+                                               required
+                                               autocomplete="username"
+                                               style="border-color: #e0e0e0; border-radius: 0 10px 10px 0;">
+                                    </div>
+                                    <div class="form-text d-flex align-items-center mt-1">
+                                        <i class="fas fa-info-circle me-1" style="color: #7f8c8d;"></i>
+                                        <span style="color: #7f8c8d;">Mínimo 3 caracteres, solo letras y números</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Email -->
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold d-flex align-items-center" style="color: #2c3e50;">
+                                        <i class="fas fa-envelope me-2" style="color: #8b5a2b;"></i>
+                                        Correo electrónico *
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0" style="border-color: #e0e0e0; border-radius: 10px 0 0 10px;">
+                                            <i class="fas fa-envelope" style="color: #8b5a2b;"></i>
+                                        </span>
+                                        <input type="email" 
+                                               name="email" 
+                                               id="id_email" 
+                                               class="form-control border-start-0" 
+                                               placeholder="tu@email.com"
+                                               required
+                                               autocomplete="email"
+                                               style="border-color: #e0e0e0; border-radius: 0 10px 10px 0;">
+                                    </div>
+                                </div>
+                                
+                                <!-- Contraseña -->
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold d-flex align-items-center" style="color: #2c3e50;">
+                                        <i class="fas fa-lock me-2" style="color: #8b5a2b;"></i>
+                                        Contraseña *
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0" style="border-color: #e0e0e0; border-radius: 10px 0 0 10px;">
+                                            <i class="fas fa-key" style="color: #8b5a2b;"></i>
+                                        </span>
+                                        <input type="password" 
+                                               name="password1" 
+                                               id="id_password1" 
+                                               class="form-control border-start-0" 
+                                               placeholder="Crea una contraseña segura"
+                                               required
+                                               autocomplete="new-password"
+                                               style="border-color: #e0e0e0; border-radius: 0 10px 10px 0;">
+                                        <button class="btn btn-outline-secondary border-start-0" type="button" id="togglePassword1" style="border-color: #e0e0e0;">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="password-strength mt-2">
+                                        <div class="progress" style="height: 6px; background-color: #f0f0f0;">
+                                            <div id="passwordStrength" class="progress-bar" style="width: 0%; transition: width 0.3s ease;"></div>
+                                        </div>
+                                        <small id="passwordTips" class="form-text d-block mt-1" style="color: #7f8c8d;"></small>
+                                    </div>
+                                </div>
+                                
+                                <!-- Confirmar Contraseña -->
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold d-flex align-items-center" style="color: #2c3e50;">
+                                        <i class="fas fa-lock me-2" style="color: #8b5a2b;"></i>
+                                        Confirmar contraseña *
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0" style="border-color: #e0e0e0; border-radius: 10px 0 0 10px;">
+                                            <i class="fas fa-key" style="color: #8b5a2b;"></i>
+                                        </span>
+                                        <input type="password" 
+                                               name="password2" 
+                                               id="id_password2" 
+                                               class="form-control border-start-0" 
+                                               placeholder="Repite la contraseña"
+                                               required
+                                               autocomplete="new-password"
+                                               style="border-color: #e0e0e0; border-radius: 0 10px 10px 0;">
+                                        <button class="btn btn-outline-secondary border-start-0" type="button" id="togglePassword2" style="border-color: #e0e0e0;">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div id="passwordMatch" class="form-text mt-1" style="color: #7f8c8d;">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        <span>Las contraseñas deben coincidir</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Términos y Condiciones -->
+                                <div class="mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="acceptTerms" required style="width: 18px; height: 18px; border-color: #8b5a2b;">
+                                        <label class="form-check-label ms-2" for="acceptTerms" style="color: #7f8c8d;">
+                                            Acepto los <a href="#" class="text-decoration-none fw-semibold" style="color: #8b5a2b;">términos y condiciones</a> y la <a href="#" class="text-decoration-none fw-semibold" style="color: #8b5a2b;">política de privacidad</a> de Dalgona Cookies.
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- Newsletter -->
+                                <div class="mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="newsletter" checked style="width: 18px; height: 18px; border-color: #8b5a2b;">
+                                        <label class="form-check-label ms-2" for="newsletter" style="color: #7f8c8d;">
+                                            <i class="fas fa-bell me-1" style="color: #e8a628;"></i>
+                                            Quiero recibir ofertas exclusivas y novedades por email.
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- Botón de Registro -->
+                                <div class="mt-5">
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-lg shadow" style="background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); color: white; border: none; border-radius: 12px; padding: 16px; font-weight: 600;">
+                                            <i class="fas fa-user-plus me-2"></i>
+                                            Crear mi cuenta
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Enlace a Login -->
+                                <div class="text-center mt-4 pt-4 border-top">
+                                    <p class="mb-0" style="color: #7f8c8d;">
+                                        ¿Ya tienes una cuenta?
+                                        <a href="{% url 'login' %}" class="fw-bold text-decoration-none" style="color: #8b5a2b;">
+                                            Inicia sesión aquí
+                                            <i class="fas fa-arrow-right ms-1"></i>
+                                        </a>
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Lado Derecho - Ventajas -->
+                    <div class="col-lg-4 p-4 p-lg-5" style="background: linear-gradient(135deg, #5c3d2e 0%, #8b5a2b 100%); color: white;">
+                        <div class="card-body h-100 d-flex flex-column">
+                            <div class="text-center mb-4">
+                                <div class="mb-3">
+                                    <i class="fas fa-award fa-3x" style="color: #e8a628;"></i>
+                                </div>
+                                <h4 class="fw-bold">Ventajas Premium</h4>
+                                <p class="opacity-75">Beneficios exclusivos para miembros</p>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="d-flex align-items-start mb-3">
+                                    <div class="me-3">
+                                        <div class="bg-white rounded-circle p-2" style="width: 40px; height: 40px;">
+                                            <i class="fas fa-truck" style="color: #8b5a2b;"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Envío Gratis +$500</h6>
+                                        <p class="small opacity-75 mb-0">En todos tus pedidos superiores a $500</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex align-items-start mb-3">
+                                    <div class="me-3">
+                                        <div class="bg-white rounded-circle p-2" style="width: 40px; height: 40px;">
+                                            <i class="fas fa-percentage" style="color: #8b5a2b;"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">25% OFF Primera Compra</h6>
+                                        <p class="small opacity-75 mb-0">Descuento inmediato al registrarte</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex align-items-start mb-3">
+                                    <div class="me-3">
+                                        <div class="bg-white rounded-circle p-2" style="width: 40px; height: 40px;">
+                                            <i class="fas fa-star" style="color: #8b5a2b;"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Puntos de Fidelidad</h6>
+                                        <p class="small opacity-75 mb-0">Acumula puntos y canjea por productos</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex align-items-start mb-3">
+                                    <div class="me-3">
+                                        <div class="bg-white rounded-circle p-2" style="width: 40px; height: 40px;">
+                                            <i class="fas fa-history" style="color: #8b5a2b;"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Pedidos Rápidos</h6>
+                                        <p class="small opacity-75 mb-0">Guarda tus datos para compras express</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex align-items-start">
+                                    <div class="me-3">
+                                        <div class="bg-white rounded-circle p-2" style="width: 40px; height: 40px;">
+                                            <i class="fas fa-gift" style="color: #8b5a2b;"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Regalo de Bienvenida</h6>
+                                        <p class="small opacity-75 mb-0">Una galleta premium de cortesía</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Testimonio -->
+                            <div class="mt-auto">
+                                <div class="bg-white rounded-3 p-3" style="background: rgba(255, 255, 255, 0.1) !important;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <div class="me-3">
+                                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #e8a628 0%, #ffd166 100%); border-radius: 50%;"></div>
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-bold mb-0" style="color: #e8a628;">Ana Martínez</h6>
+                                            <small class="opacity-75">Cliente desde 2023</small>
+                                        </div>
+                                    </div>
+                                    <p class="small mb-0 opacity-75">
+                                        <i class="fas fa-quote-left me-1" style="color: #e8a628;"></i>
+                                        "Me registré hace 3 meses y ya he ahorrado más de $5,000 con los descuentos exclusivos."
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Estilos Adicionales -->
+<style>
+    .form-control:focus {
+        border-color: #8b5a2b !important;
+        box-shadow: 0 0 0 0.2rem rgba(139, 90, 43, 0.25) !important;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 20px rgba(139, 90, 43, 0.3) !important;
+    }
+    
+    #togglePassword1:hover, #togglePassword2:hover {
+        color: #8b5a2b !important;
+        background-color: #f8f9fa;
+    }
+    
+    .progress-bar {
+        transition: width 0.3s ease, background-color 0.3s ease;
+    }
+    
+    .card {
+        transition: transform 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    
+    input:valid {
+        border-color: #28a745 !important;
+    }
+    
+    input:invalid {
+        border-color: #dc3545 !important;
+    }
+</style>
+
+<!-- Scripts Avanzados -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle passwords
+        function setupPasswordToggle(toggleId, inputId) {
+            const toggleBtn = document.getElementById(toggleId);
+            const passwordInput = document.getElementById(inputId);
+            
+            if (toggleBtn && passwordInput) {
+                toggleBtn.addEventListener('click', function() {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('fa-eye');
+                    icon.classList.toggle('fa-eye-slash');
+                });
+            }
+        }
+        
+        setupPasswordToggle('togglePassword1', 'id_password1');
+        setupPasswordToggle('togglePassword2', 'id_password2');
+        
+        // Validación de fortaleza de contraseña
+        const password1Input = document.getElementById('id_password1');
+        const password2Input = document.getElementById('id_password2');
+        const passwordStrength = document.getElementById('passwordStrength');
+        const passwordTips = document.getElementById('passwordTips');
+        const passwordMatch = document.getElementById('passwordMatch');
+        
+        if (password1Input && password2Input) {
+            password1Input.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+                let tips = [];
+                
+                // Validar longitud
+                if (password.length >= 8) {
+                    strength += 25;
+                } else {
+                    tips.push('Mínimo 8 caracteres');
+                }
+                
+                // Validar mayúsculas
+                if (/[A-Z]/.test(password)) {
+                    strength += 25;
+                } else {
+                    tips.push('Incluye una mayúscula');
+                }
+                
+                // Validar números
+                if (/[0-9]/.test(password)) {
+                    strength += 25;
+                } else {
+                    tips.push('Incluye un número');
+                }
+                
+                // Validar caracteres especiales
+                if (/[^A-Za-z0-9]/.test(password)) {
+                    strength += 25;
+                } else {
+                    tips.push('Incluye un carácter especial');
+                }
+                
+                // Actualizar barra de progreso
+                if (passwordStrength) {
+                    passwordStrength.style.width = strength + '%';
+                    
+                    // Cambiar color según fuerza
+                    if (strength < 50) {
+                        passwordStrength.style.backgroundColor = '#e74c3c';
+                    } else if (strength < 75) {
+                        passwordStrength.style.backgroundColor = '#f39c12';
+                    } else {
+                        passwordStrength.style.backgroundColor = '#27ae60';
+                    }
+                }
+                
+                // Actualizar tips
+                if (passwordTips) {
+                    if (password.length === 0) {
+                        passwordTips.innerHTML = '<i class="fas fa-info-circle me-1"></i> Ingresa una contraseña';
+                        passwordTips.style.color = '#7f8c8d';
+                    } else if (tips.length === 0) {
+                        passwordTips.innerHTML = '<i class="fas fa-check-circle me-1" style="color: #27ae60;"></i> Contraseña segura';
+                        passwordTips.style.color = '#27ae60';
+                    } else {
+                        passwordTips.innerHTML = '<i class="fas fa-exclamation-circle me-1" style="color: #e74c3c;"></i> ' + tips.join(' • ');
+                        passwordTips.style.color = '#e74c3c';
+                    }
+                }
+                
+                // Validar coincidencia
+                validatePasswordMatch();
+            });
+            
+            password2Input.addEventListener('input', validatePasswordMatch);
+            
+            function validatePasswordMatch() {
+                if (passwordMatch) {
+                    if (password2Input.value.length === 0) {
+                        passwordMatch.innerHTML = '<i class="fas fa-info-circle me-1"></i> Las contraseñas deben coincidir';
+                        passwordMatch.style.color = '#7f8c8d';
+                    } else if (password1Input.value === password2Input.value) {
+                        passwordMatch.innerHTML = '<i class="fas fa-check-circle me-1" style="color: #27ae60;"></i> Las contraseñas coinciden';
+                        passwordMatch.style.color = '#27ae60';
+                    } else {
+                        passwordMatch.innerHTML = '<i class="fas fa-times-circle me-1" style="color: #e74c3c;"></i> Las contraseñas no coinciden';
+                        passwordMatch.style.color = '#e74c3c';
+                    }
+                }
+            }
+        }
+        
+        // Efecto botón de registro
+        const registerBtn = document.querySelector('button[type="submit"]');
+        if (registerBtn) {
+            registerBtn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+                this.style.boxShadow = '0 10px 25px rgba(139, 90, 43, 0.4) !important';
+            });
+            
+            registerBtn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 4px 15px rgba(139, 90, 43, 0.2) !important';
+            });
+        }
+        
+        // Validación de términos
+        const acceptTerms = document.getElementById('acceptTerms');
+        const registerForm = document.getElementById('registerForm');
+        
+        if (registerForm && acceptTerms) {
+            registerForm.addEventListener('submit', function(e) {
+                if (!acceptTerms.checked) {
+                    e.preventDefault();
+                    
+                    // Efecto visual
+                    acceptTerms.style.borderColor = '#e74c3c';
+                    acceptTerms.parentElement.style.color = '#e74c3c';
+                    
+                    // Mostrar alerta
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
+                    alertDiv.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-exclamation-circle me-3 fa-lg"></i>
+                            <div>
+                                <h6 class="mb-1">Términos no aceptados</h6>
+                                <p class="small mb-0">Debes aceptar los términos y condiciones para continuar.</p>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    `;
+                    
+                    const container = acceptTerms.closest('.col-12');
+                    if (container) {
+                        const existingAlert = container.querySelector('.alert');
+                        if (existingAlert) {
+                            existingAlert.remove();
+                        }
+                        container.appendChild(alertDiv);
+                    }
+                    
+                    // Scroll al error
+                    acceptTerms.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        }
+        
+        // Validación en tiempo real de email
+        const emailInput = document.getElementById('id_email');
+        if (emailInput) {
+            emailInput.addEventListener('blur', function() {
+                const email = this.value;
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                
+                if (email && !emailRegex.test(email)) {
+                    this.style.borderColor = '#e74c3c';
+                    this.parentElement.classList.add('was-validated');
+                } else if (email) {
+                    this.style.borderColor = '#28a745';
+                }
+            });
+        }
+        
+        // Validación en tiempo real de username
+        const usernameInput = document.getElementById('id_username');
+        if (usernameInput) {
+            usernameInput.addEventListener('input', function() {
+                const username = this.value;
+                const usernameRegex = /^[a-zA-Z0-9_]+$/;
+                
+                if (username.length > 0) {
+                    if (username.length < 3) {
+                        this.style.borderColor = '#e74c3c';
+                    } else if (!usernameRegex.test(username)) {
+                        this.style.borderColor = '#e74c3c';
+                    } else {
+                        this.style.borderColor = '#28a745';
+                    }
+                } else {
+                    this.style.borderColor = '#e0e0e0';
+                }
+            });
+        }
+        
+        // Auto-focus en el primer campo
+        if (usernameInput) {
+            usernameInput.focus();
+        }
+    });
+</script>
+{% endblock %}

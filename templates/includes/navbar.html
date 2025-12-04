@@ -1,0 +1,251 @@
+<!-- templates/includes/navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+    <div class="container">
+        <!-- Logo y marca -->
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}" style="font-weight: 700; color: #2c3e50;">
+            <div class="logo-circle me-3" style="width: 40px; height: 40px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-cookie-bite" style="color: white; font-size: 1.2rem;"></i>
+            </div>
+            <span style="font-size: 1.5rem; letter-spacing: -0.5px;">
+                <span style="color: #2c3e50;">Dalgona</span>
+                <span style="color: #8b5a2b;">Cookies</span>
+            </span>
+        </a>
+
+        <!-- Botón menú móvil -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Menú principal -->
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item mx-2">
+                    <a class="nav-link position-relative {% if request.resolver_match.url_name == 'home' %}active{% endif %}" 
+                       href="{% url 'home' %}" 
+                       style="{% if request.resolver_match.url_name == 'home' %}color: #8b5a2b; font-weight: 600;{% else %}color: #2c3e50; font-weight: 500;{% endif %} padding: 8px 16px;">
+                        <i class="fas fa-home me-1"></i>Home
+                    </a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link position-relative {% if request.resolver_match.url_name == 'galleta' %}active{% endif %}" 
+                       href="{% url 'galleta' %}" 
+                       style="{% if request.resolver_match.url_name == 'galleta' %}color: #8b5a2b; font-weight: 600;{% else %}color: #2c3e50; font-weight: 500;{% endif %} padding: 8px 16px;">
+                        <i class="fas fa-cookie me-1"></i>Galletas
+                    </a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link position-relative {% if request.resolver_match.url_name == 'formulario' %}active{% endif %}" 
+                       href="{% url 'formulario' %}" 
+                       style="{% if request.resolver_match.url_name == 'formulario' %}color: #8b5a2b; font-weight: 600;{% else %}color: #2c3e50; font-weight: 500;{% endif %} padding: 8px 16px;">
+                        <i class="fas fa-envelope me-1"></i>Contacto
+                    </a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link position-relative {% if request.resolver_match.url_name == 'about' %}active{% endif %}" 
+                       href="{% url 'about' %}" 
+                       style="{% if request.resolver_match.url_name == 'about' %}color: #8b5a2b; font-weight: 600;{% else %}color: #2c3e50; font-weight: 500;{% endif %} padding: 8px 16px;">
+                        <i class="fas fa-info-circle me-1"></i>About
+                    </a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link position-relative {% if request.resolver_match.url_name == 'login' %}active{% endif %}" 
+                       href="{% url 'login' %}" 
+                       style="{% if request.resolver_match.url_name == 'login' %}color: #8b5a2b; font-weight: 600;{% else %}color: #2c3e50; font-weight: 500;{% endif %} padding: 8px 16px;">
+                        <i class="fas fa-sign-in-alt me-1"></i>Login
+                        {% if request.resolver_match.url_name == 'login' %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color: #e8a628; font-size: 0.6rem; padding: 3px 6px;">
+                            Acceso
+                        </span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link position-relative {% if request.resolver_match.url_name == 'register' %}active{% endif %}" 
+                       href="{% url 'register' %}" 
+                       style="{% if request.resolver_match.url_name == 'register' %}color: #8b5a2b; font-weight: 600;{% else %}color: #2c3e50; font-weight: 500;{% endif %} padding: 8px 16px;">
+                        <i class="fas fa-user-plus me-1"></i>Register
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Acciones de usuario -->
+            <div class="d-flex align-items-center">
+                <!-- Buscador -->
+                <div class="input-group me-3" style="max-width: 250px;">
+                    <input type="text" class="form-control border-end-0" placeholder="Buscar galletas..." style="border-color: #e0e0e0; border-radius: 25px 0 0 25px; padding-left: 20px; font-size: 0.9rem;">
+                    <button class="btn btn-outline-secondary border-start-0" type="button" style="border-color: #e0e0e0; border-radius: 0 25px 25px 0; background-color: white;">
+                        <i class="fas fa-search" style="color: #8b5a2b;"></i>
+                    </button>
+                </div>
+
+                <!-- Carrito de compras - Adaptado a tu contexto -->
+                <div class="dropdown me-3">
+                    <a href="{% url 'carrito' %}" class="position-relative text-decoration-none" style="color: #2c3e50;">
+                        <div class="cart-icon-container" style="position: relative;">
+                            <i class="fas fa-shopping-cart fa-lg"></i>
+                            {% if cart_count and cart_count > 0 %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color: #e74c3c; font-size: 0.7rem; padding: 2px 6px; min-width: 20px;">
+                                {{ cart_count }}
+                            </span>
+                            {% endif %}
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Indicador de usuario -->
+                <div class="dropdown">
+                    {% if user.is_authenticated %}
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" style="color: #2c3e50;">
+                        <div class="user-avatar me-2" style="width: 36px; height: 36px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="color: white; font-size: 0.9rem;"></i>
+                        </div>
+                        <span style="font-weight: 500; font-size: 0.9rem;">{{ user.username|truncatechars:15 }}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg" style="border-radius: 10px; padding: 10px 0; min-width: 200px;">
+                        <li>
+                            <span class="dropdown-item-text d-flex align-items-center py-2 px-3">
+                                <i class="fas fa-user-circle me-2" style="color: #8b5a2b;"></i>
+                                <span>Hola, {{ user.username }}</span>
+                            </span>
+                        </li>
+                        <li><hr class="dropdown-divider my-2"></li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2 px-3" href="#">
+                                <i class="fas fa-user-edit me-2" style="color: #8b5a2b;"></i>
+                                <span>Mi Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2 px-3" href="#">
+                                <i class="fas fa-shopping-bag me-2" style="color: #8b5a2b;"></i>
+                                <span>Mis Pedidos</span>
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider my-2"></li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center py-2 px-3" href="{% url 'logout' %}" style="color: #e74c3c;">
+                                <i class="fas fa-sign-out-alt me-2"></i>
+                                <span>Cerrar Sesión</span>
+                            </a>
+                        </li>
+                    </ul>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="d-flex align-items-center text-decoration-none" style="color: #2c3e50;">
+                        <div class="user-avatar me-2" style="width: 36px; height: 36px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="color: white; font-size: 0.9rem;"></i>
+                        </div>
+                        <span style="font-weight: 500; font-size: 0.9rem;">Mi Cuenta</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Espacio para el navbar fixed -->
+<div style="height: 80px;"></div>
+
+<!-- Estilos específicos del navbar -->
+<style>
+    /* Navbar hover effects */
+    .nav-link {
+        position: relative;
+        transition: all 0.3s ease;
+        border-radius: 8px;
+    }
+    
+    .nav-link:hover {
+        background-color: rgba(139, 90, 43, 0.08);
+        color: #8b5a2b !important;
+    }
+    
+    .nav-link.active {
+        background-color: rgba(139, 90, 43, 0.1);
+    }
+    
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 50%;
+        background-color: #8b5a2b;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+    
+    .nav-link:hover::after {
+        width: 70%;
+    }
+    
+    /* Carrito mejorado */
+    .cart-icon-container {
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .cart-icon-container:hover {
+        transform: scale(1.1);
+    }
+    
+    .cart-icon-container:hover i {
+        color: #8b5a2b !important;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .navbar-collapse {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+        }
+        
+        .nav-link {
+            padding: 10px 15px !important;
+            margin: 5px 0;
+        }
+        
+        .input-group {
+            max-width: 100% !important;
+            margin: 15px 0;
+        }
+    }
+</style>
+
+<script>
+    // Efecto en icono de carrito
+    document.addEventListener('DOMContentLoaded', function() {
+        const cartIcon = document.querySelector('.cart-icon-container');
+        if (cartIcon) {
+            cartIcon.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1)';
+                this.querySelector('i').style.color = '#8b5a2b';
+            });
+            
+            cartIcon.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.querySelector('i').style.color = '#2c3e50';
+            });
+        }
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (navbar && window.scrollY > 50) {
+                navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.12)';
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.backdropFilter = 'blur(10px)';
+            } else if (navbar) {
+                navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
+                navbar.style.background = '#ffffff';
+                navbar.style.backdropFilter = 'none';
+            }
+        });
+    });
+</script>

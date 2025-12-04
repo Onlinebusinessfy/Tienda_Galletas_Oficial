@@ -1,34 +1,511 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Sobre Nosotros - Dalgona{% endblock %}
+{% block title %}Sobre Nosotros - Dalgona Cookies{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <h1 class="text-center mb-4">Sobre Nuestra Tienda de Galletas</h1>
-    
-    <p class="lead text-center mb-5">
-        En <strong>Tienda de Galletas Dalgona</strong> nos apasiona crear momentos dulces que alegren tu día. Desde nuestras clásicas galletas de mantequilla hasta nuestras innovadoras combinaciones, cada pieza es elaborada con ingredientes de la más alta calidad y mucho amor.
-    </p>
-
-    <div class="row text-center">
-        <div class="col-md-4 mb-4">
-            <h3>Calidad</h3>
-            <p>Nuestras galletas son elaboradas con ingredientes frescos y naturales, asegurando un sabor inigualable en cada bocado.</p>
+<!-- Hero Section -->
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #f9f5f0 0%, #e8d8c3 100%);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-3" style="color: #2c3e50;">
+                    Más que galletas,<br>
+                    <span style="color: #8b5a2b;">creamos momentos</span>
+                </h1>
+                <p class="lead mb-4" style="color: #7a6454;">
+                    En Dalgona Cookies transformamos ingredientes simples en experiencias dulces inolvidables. Cada galleta cuenta una historia de pasión, tradición y dedicación.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'galleta' %}" class="btn btn-lg" style="background-color: #8b5a2b; color: white; border: none;">
+                        <i class="fas fa-cookie me-2"></i>Nuestras Galletas
+                    </a>
+                    <a href="{% url 'formulario' %}" class="btn btn-lg btn-outline" style="border-color: #8b5a2b; color: #8b5a2b;">
+                        <i class="fas fa-handshake me-2"></i>Contáctanos
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1590080874088-eec64895b423?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" 
+                         alt="Galletas artesanales" 
+                         class="img-fluid rounded-3 shadow-lg"
+                         style="max-height: 400px;">
+                    <div class="position-absolute bottom-0 start-0 translate-middle bg-white rounded-circle p-3 shadow-lg" style="width: 80px; height: 80px;">
+                        <i class="fas fa-heart fa-2x" style="color: #e74c3c;"></i>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <h3>Variedad</h3>
-            <p>Ofrecemos una amplia gama de sabores y diseños, perfectos para cualquier ocasión: cumpleaños, eventos o simplemente para consentirte.</p>
-        </div>
-        <div class="col-md-4 mb-4">
-            <h3>Pasión</h3>
-            <p>Cada galleta es hecha a mano con dedicación y amor, porque creemos que un detalle dulce puede hacer la diferencia.</p>
-        </div>
-    </div>
-
-    <div class="text-center mt-5">
-        <p class="mb-1">¡Visítanos y descubre el placer de lo artesanal!</p>
-        <p>📍 Calle Calzada Cetys #123, Tijuana Baja California, México</p>
-        <p>📞 Tel: +52 664 399 6945 | ✉️ Email: dalgona@gmail.com.mx</p>
     </div>
 </div>
+
+<!-- Nuestra Historia -->
+<div class="container py-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+            <div class="card border-0 shadow-lg">
+                <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" 
+                     alt="Historia Dalgona" 
+                     class="card-img-top rounded-top"
+                     style="height: 300px; object-fit: cover;">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="logo-circle me-3" style="width: 50px; height: 50px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-history" style="color: white;"></i>
+                        </div>
+                        <h3 class="mb-0" style="color: #2c3e50;">Nuestra Historia</h3>
+                    </div>
+                    <p class="card-text" style="color: #7f8c8d;">
+                        Todo comenzó en 2018 en una pequeña cocina familiar en Tijuana. Lo que empezó como un hobby de fin de semana se convirtió en una pasión compartida por crear las galletas más deliciosas y hermosas de la región.
+                    </p>
+                    <p class="card-text mb-0" style="color: #7f8c8d;">
+                        Hoy, seguimos manteniendo esa esencia artesanal mientras innovamos con nuevos sabores y técnicas que deleitan a miles de clientes.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="ps-lg-5">
+                <h2 class="fw-bold mb-4" style="color: #2c3e50;">
+                    <i class="fas fa-star me-2" style="color: #e8a628;"></i>
+                    Nuestra Filosofía
+                </h2>
+                <p class="lead mb-4" style="color: #5c3d2e;">
+                    Creemos que cada galleta debe ser una obra maestra de sabor y textura, creada con ingredientes naturales y mucho corazón.
+                </p>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="d-flex align-items-start">
+                            <div class="me-3">
+                                <div class="rounded-circle p-2" style="background-color: #e8d8c3; width: 50px; height: 50px;">
+                                    <i class="fas fa-leaf fa-lg" style="color: #27ae60;"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 style="color: #2c3e50;">Ingredientes Naturales</h5>
+                                <p class="small" style="color: #7f8c8d;">Solo utilizamos ingredientes frescos, sin conservantes artificiales.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="d-flex align-items-start">
+                            <div class="me-3">
+                                <div class="rounded-circle p-2" style="background-color: #e8d8c3; width: 50px; height: 50px;">
+                                    <i class="fas fa-hands fa-lg" style="color: #8b5a2b;"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 style="color: #2c3e50;">Hecho a Mano</h5>
+                                <p class="small" style="color: #7f8c8d;">Cada galleta es elaborada artesanalmente con atención al detalle.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="d-flex align-items-start">
+                            <div class="me-3">
+                                <div class="rounded-circle p-2" style="background-color: #e8d8c3; width: 50px; height: 50px;">
+                                    <i class="fas fa-recycle fa-lg" style="color: #3498db;"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 style="color: #2c3e50;">Sostenibilidad</h5>
+                                <p class="small" style="color: #7f8c8d;">Empleamos prácticas eco-friendly en nuestro proceso de producción.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="d-flex align-items-start">
+                            <div class="me-3">
+                                <div class="rounded-circle p-2" style="background-color: #e8d8c3; width: 50px; height: 50px;">
+                                    <i class="fas fa-heart fa-lg" style="color: #e74c3c;"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 style="color: #2c3e50;">Pasión por lo Dulce</h5>
+                                <p class="small" style="color: #7f8c8d;">Amamos lo que hacemos y eso se refleja en cada bocado.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Nuestros Valores -->
+<div class="container-fluid py-5" style="background-color: #f8f9fa;">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col text-center">
+                <h2 class="fw-bold" style="color: #2c3e50;">Nuestros Valores</h2>
+                <p class="text-muted">Los pilares que guían cada galleta que horneamos</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="mb-3">
+                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-medal fa-2x" style="color: white;"></i>
+                            </div>
+                        </div>
+                        <h5 class="mb-3" style="color: #2c3e50;">Calidad Premium</h5>
+                        <p class="text-muted">Nos comprometemos a usar solo los mejores ingredientes y técnicas de horneado para garantizar la máxima calidad en cada galleta.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="mb-3">
+                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-users fa-2x" style="color: white;"></i>
+                            </div>
+                        </div>
+                        <h5 class="mb-3" style="color: #2c3e50;">Comunidad</h5>
+                        <p class="text-muted">Creemos en construir relaciones duraderas con nuestros clientes, proveedores y la comunidad que nos rodea.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="mb-3">
+                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-lightbulb fa-2x" style="color: white;"></i>
+                            </div>
+                        </div>
+                        <h5 class="mb-3" style="color: #2c3e50;">Innovación</h5>
+                        <p class="text-muted">Constantemente exploramos nuevos sabores, texturas y técnicas para sorprender a nuestros clientes.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="mb-3">
+                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-hand-holding-heart fa-2x" style="color: white;"></i>
+                            </div>
+                        </div>
+                        <h5 class="mb-3" style="color: #2c3e50;">Responsabilidad</h5>
+                        <p class="text-muted">Nos preocupamos por nuestro impacto ambiental y social, implementando prácticas sostenibles en todo nuestro proceso.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- El Equipo -->
+<div class="container py-5">
+    <div class="row mb-5">
+        <div class="col text-center">
+            <h2 class="fw-bold" style="color: #2c3e50;">Conoce Nuestro Equipo</h2>
+            <p class="text-muted">Los apasionados horneadores detrás de cada galleta</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm text-center h-100">
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <div class="mx-auto" style="width: 120px; height: 120px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%;"></div>
+                    </div>
+                    <h5 class="mb-1" style="color: #2c3e50;">Esteban Torres</h5>
+                    <p class="text-muted small mb-3">Fundadoro & Chef Principal</p>
+                    <p class="card-text" style="color: #7f8c8d;">
+                        Con más de 15 años de experiencia en repostería, Esteban es la mente creativa detrás de nuestros sabores únicos.
+                    </p>
+                    <div class="mt-3">
+                        <a href="#" class="me-2" style="color: #8b5a2b;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: #8b5a2b;"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm text-center h-100">
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <div class="mx-auto" style="width: 120px; height: 120px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%;"></div>
+                    </div>
+                    <h5 class="mb-1" style="color: #2c3e50;">Omar Alejandro</h5>
+                    <p class="text-muted small mb-3">Maestro Horneador</p>
+                    <p class="card-text" style="color: #7f8c8d;">
+                        Especialista en técnicas tradicionales de horneado, Alejandro garantiza la perfecta textura de cada galleta.
+                    </p>
+                    <div class="mt-3">
+                        <a href="#" class="me-2" style="color: #8b5a2b;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: #8b5a2b;"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card border-0 shadow-sm text-center h-100">
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <div class="mx-auto" style="width: 120px; height: 120px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%;"></div>
+                    </div>
+                    <h5 class="mb-1" style="color: #2c3e50;">Samuel Dominguez</h5>
+                    <p class="text-muted small mb-3">Diseñador de Sabores</p>
+                    <p class="card-text" style="color: #7f8c8d;">
+                        Samuel combina ingredientes de manera innovadora para crear experiencias de sabor únicas y memorables.
+                    </p>
+                    <div class="mt-3">
+                        <a href="#" class="me-2" style="color: #8b5a2b;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: #8b5a2b;"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Logros y Estadísticas -->
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #8b5a2b 0%, #5c3d2e 100%); color: white;">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <h2 class="fw-bold display-4" style="color: #e8a628;">5+</h2>
+                <p class="mb-0">Años de Experiencia</p>
+                <small>Horneando sonrisas desde 2022</small>
+            </div>
+            <div class="col-md-3 mb-4">
+                <h2 class="fw-bold display-4" style="color: #e8a628;">10K+</h2>
+                <p class="mb-0">Clientes Satisfechos</p>
+                <small>En toda Baja California</small>
+            </div>
+            <div class="col-md-3 mb-4">
+                <h2 class="fw-bold display-4" style="color: #e8a628;">50+</h2>
+                <p class="mb-0">Sabores Únicos</p>
+                <small>Desde clásicos hasta innovaciones</small>
+            </div>
+            <div class="col-md-3 mb-4">
+                <h2 class="fw-bold display-4" style="color: #e8a628;">98%</h2>
+                <p class="mb-0">Satisfacción</p>
+                <small>Rating de nuestros clientes</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Información de Contacto -->
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body p-4 p-lg-5">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 mb-4 mb-md-0">
+                            <h3 class="fw-bold mb-4" style="color: #2c3e50;">
+                                <i class="fas fa-map-marker-alt me-2" style="color: #8b5a2b;"></i>
+                                Visítanos
+                            </h3>
+                            <div class="mb-4">
+                                <h5 style="color: #5c3d2e;">📍 Nuestra Ubicación</h5>
+                                <p class="mb-0" style="color: #7f8c8d;">
+                                    Calle Calzada Cetys #123<br>
+                                    Tijuana, Baja California<br>
+                                    México
+                                </p>
+                            </div>
+                            <div class="mb-4">
+                                <h5 style="color: #5c3d2e;">📞 Contacto</h5>
+                                <p class="mb-0" style="color: #7f8c8d;">
+                                    Tel: +52 664 399 6945<br>
+                                    Email: dalgona@gmail.com.mx
+                                </p>
+                            </div>
+                            <div>
+                                <h5 style="color: #5c3d2e;">🕐 Horarios</h5>
+                                <p class="mb-0" style="color: #7f8c8d;">
+                                    Lunes a Viernes: 9:00 AM - 7:00 PM<br>
+                                    Sábados: 10:00 AM - 5:00 PM<br>
+                                    Domingos: Cerrado
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-center">
+                                <div class="mb-4">
+                                    <i class="fas fa-cookie-bite fa-5x" style="color: #d4c1a6;"></i>
+                                </div>
+                                <h4 class="fw-bold mb-3" style="color: #2c3e50;">
+                                    ¿Listo para probar nuestras galletas?
+                                </h4>
+                                <p class="mb-4" style="color: #7f8c8d;">
+                                    Visítanos en nuestra tienda física o haz tu pedido en línea para disfrutar de nuestras galletas frescas en la puerta de tu casa.
+                                </p>
+                                <div class="d-grid gap-2">
+                                    <a href="{% url 'galleta' %}" class="btn" style="background-color: #8b5a2b; color: white;">
+                                        <i class="fas fa-shopping-cart me-2"></i>Ordenar Ahora
+                                    </a>
+                                    <a href="{% url 'formulario' %}" class="btn btn-outline" style="border-color: #8b5a2b; color: #8b5a2b;">
+                                        <i class="fas fa-envelope me-2"></i>Envíanos un Mensaje
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonios de Clientes -->
+<div class="container-fluid py-5" style="background-color: #f8f9fa;">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col text-center">
+                <h2 class="fw-bold" style="color: #2c3e50;">Lo que dicen nuestros clientes</h2>
+                <p class="text-muted">Historias dulces de satisfacción</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-quote-left fa-2x" style="color: #e8a628;"></i>
+                        </div>
+                        <p class="card-text mb-4" style="color: #5c3d2e;">
+                            "Las mejores galletas de Tijuana. Las pedí para mi boda y todos los invitados quedaron encantados. ¡Superaron todas mis expectativas!"
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%;"></div>
+                            </div>
+                            <div>
+                                <h6 class="mb-0" style="color: #2c3e50;">Laura Sánchez</h6>
+                                <small class="text-muted">Cliente desde 2020</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-quote-left fa-2x" style="color: #e8a628;"></i>
+                        </div>
+                        <p class="card-text mb-4" style="color: #5c3d2e;">
+                            "Como empresa, hemos pedido galletas personalizadas para varios eventos. Siempre son puntuales, profesionales y deliciosas."
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%;"></div>
+                            </div>
+                            <div>
+                                <h6 class="mb-0" style="color: #2c3e50;">Roberto Mendoza</h6>
+                                <small class="text-muted">Cliente Corporativo</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-quote-left fa-2x" style="color: #e8a628;"></i>
+                        </div>
+                        <p class="card-text mb-4" style="color: #5c3d2e;">
+                            "Mis hijos aman las galletas de Dalgona. Las pedimos cada mes y nunca decepcionan. Frescas, deliciosas y con ingredientes de calidad."
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%;"></div>
+                            </div>
+                            <div>
+                                <h6 class="mb-0" style="color: #2c3e50;">Patricia López</h6>
+                                <small class="text-muted">Cliente frecuente</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Final -->
+<div class="container-fluid py-5 text-center" style="background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%); color: white;">
+    <div class="container">
+        <h2 class="fw-bold mb-4">¿Listo para vivir la experiencia Dalgona?</h2>
+        <p class="lead mb-4 opacity-75">
+            Únete a miles de clientes satisfechos que ya disfrutan de nuestras galletas artesanales.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'galleta' %}" class="btn btn-lg" style="background-color: #e8a628; color: #2c3e50; border: none;">
+                <i class="fas fa-shopping-bag me-2"></i>Ver Catálogo
+            </a>
+            <a href="{% url 'register' %}" class="btn btn-lg btn-outline-light">
+                <i class="fas fa-user-plus me-2"></i>Crear Cuenta
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .logo-circle {
+        transition: transform 0.3s ease;
+    }
+    
+    .logo-circle:hover {
+        transform: scale(1.05);
+    }
+    
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animación para estadísticas
+        const counters = document.querySelectorAll('.display-4');
+        counters.forEach(counter => {
+            const target = parseInt(counter.textContent.replace('+', '').replace('%', ''));
+            let current = 0;
+            const increment = target / 100;
+            
+            const updateCounter = () => {
+                if (current < target) {
+                    current += increment;
+                    counter.textContent = Math.ceil(current) + (counter.textContent.includes('+') ? '+' : '') + (counter.textContent.includes('%') ? '%' : '');
+                    setTimeout(updateCounter, 20);
+                } else {
+                    counter.textContent = target + (counter.textContent.includes('+') ? '+' : '') + (counter.textContent.includes('%') ? '%' : '');
+                }
+            };
+            
+            // Iniciar animación cuando el elemento sea visible
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        updateCounter();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            observer.observe(counter);
+        });
+    });
+</script>
 {% endblock %}

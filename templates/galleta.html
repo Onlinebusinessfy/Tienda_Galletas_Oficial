@@ -1,344 +1,246 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Galletas Premium</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+{% extends 'base.html' %}
+{% load static %}
 
-        body {
-            background-color: #f9f5f0;
-            color: #5c3d2e;
-            line-height: 1.6;
-        }
+{% block title %}Galletas - Dalgona Cookies{% endblock %}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, #8b5a2b 0%, #5c3d2e 100%);
-            color: #fff;
-            padding: 30px 0;
-            text-align: center;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-            box-shadow: 0 4px 12px rgba(92, 61, 46, 0.2);
-        }
-
-        .logo {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .logo i {
-            margin-right: 10px;
-        }
-
-        .tagline {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            opacity: 0.9;
-        }
-
-        /* Benefits Section */
-        .benefits {
-            background-color: #e8d8c3;
-            padding: 15px 0;
-            text-align: center;
-            margin: 20px 0;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(92, 61, 46, 0.1);
-        }
-
-        .benefits p {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .benefits span {
-            color: #8b5a2b;
-            font-weight: 700;
-        }
-
-        /* Filters Section */
-        .filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 25px 0;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(92, 61, 46, 0.1);
-        }
-
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .filter-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #5c3d2e;
-        }
-
-        .filter-select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #d4c1a6;
-            border-radius: 8px;
-            background-color: #f9f5f0;
-            color: #5c3d2e;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
-        .search-box {
-            display: flex;
-            margin-top: 25px;
-        }
-
-        .search-box input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 1px solid #d4c1a6;
-            border-radius: 8px 0 0 8px;
-            font-size: 1rem;
-        }
-
-        .search-box button {
-            background-color: #8b5a2b;
-            color: white;
-            border: none;
-            padding: 0 20px;
-            border-radius: 0 8px 8px 0;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-        }
-
-        .search-box button:hover {
-            background-color: #5c3d2e;
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(92, 61, 46, 0.1);
-            margin: 30px 0;
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            color: #d4c1a6;
-            margin-bottom: 20px;
-        }
-
-        .empty-state h2 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: #5c3d2e;
-        }
-
-        .empty-state p {
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto 25px;
-            color: #7a6454;
-        }
-
-        .back-button {
-            display: inline-block;
-            background-color: #8b5a2b;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 8px rgba(139, 90, 43, 0.3);
-        }
-
-        .back-button:hover {
-            background-color: #5c3d2e;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(139, 90, 43, 0.4);
-        }
-
-        /* Cart Section */
-        .cart-section {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-        }
-
-        .cart-button {
-            display: flex;
-            align-items: center;
-            background-color: #8b5a2b;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(92, 61, 46, 0.3);
-            transition: all 0.3s;
-        }
-
-        .cart-button:hover {
-            background-color: #5c3d2e;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(92, 61, 46, 0.4);
-        }
-
-        .cart-count {
-            background-color: #e8a628;
-            color: #5c3d2e;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 10px;
-            font-weight: 700;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            margin-top: 50px;
-            color: #7a6454;
-            border-top: 1px solid #d4c1a6;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .filters {
-                flex-direction: column;
-            }
-            
-            .filter-group {
-                width: 100%;
-            }
-            
-            .logo {
-                font-size: 2rem;
-            }
-            
-            .tagline {
-                font-size: 1rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <div class="logo">
-                <i class="fas fa-cookie-bite"></i>
-                Galletas Premium
-            </div>
-            <p class="tagline">Descubre nuestra exclusiva selección de galletas gourmet, horneadas artesanalmente con ingredientes de la más alta calidad.</p>
-        </div>
-    </header>
-
+{% block content %}
+<!-- Header del catálogo -->
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); border-bottom: 1px solid #eaeaea;">
     <div class="container">
-        <section class="benefits">
-            <p><i class="fas fa-shipping-fast"></i> Envío Gratis en pedidos +<span>$500</span> | <i class="fas fa-star"></i> Calidad Premium | <i class="fas fa-bread-slice"></i> Frescas Diariamente</p>
-        </section>
-
-        <section class="filters">
-            <div class="filter-group">
-                <label for="category"><i class="fas fa-list"></i> Categoría</label>
-                <select id="category" class="filter-select">
-                    <option>Todas las Galletas</option>
-                    <option>Galletas con Chispas de Chocolate</option>
-                    <option>Galletas de Avena y Pasas</option>
-                    <option>Galletas de Mantequilla</option>
-                    <option>Galletas Sin Gluten</option>
-                </select>
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-5 fw-bold mb-3" style="color: #2c3e50;">
+                    Nuestro Catálogo de Galletas
+                </h1>
+                <p class="lead mb-4" style="color: #7f8c8d;">
+                    Descubre nuestra exclusiva selección de galletas gourmet, horneadas artesanalmente con ingredientes de la más alta calidad.
+                </p>
+                <div class="d-flex align-items-center">
+                    <div class="me-4">
+                        <i class="fas fa-shipping-fast fa-2x" style="color: #8b5a2b;"></i>
+                    </div>
+                    <div>
+                        <h6 style="color: #2c3e50; margin-bottom: 5px;">Envío Gratis +$500</h6>
+                        <p class="small mb-0" style="color: #7f8c8d;">Calidad Premium | Frescas Diariamente</p>
+                    </div>
+                </div>
             </div>
-            
-            <div class="filter-group">
-                <label for="price"><i class="fas fa-tag"></i> Precio</label>
-                <select id="price" class="filter-select">
-                    <option>Todos los Precios</option>
-                    <option>Hasta $50</option>
-                    <option>$50 - $100</option>
-                    <option>$100 - $200</option>
-                    <option>Más de $200</option>
-                </select>
+            <div class="col-lg-6 text-center">
+                <div style="width: 200px; height: 200px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                    <i class="fas fa-cookie-bite" style="color: white; font-size: 5rem;"></i>
+                </div>
             </div>
-            
-            <div class="filter-group">
-                <label for="popularity"><i class="fas fa-fire"></i> Popularidad</label>
-                <select id="popularity" class="filter-select">
-                    <option>Más Relevantes</option>
-                    <option>Más Populares</option>
-                    <option>Mejor Calificadas</option>
-                    <option>Novedades</option>
-                </select>
-            </div>
-            
-            <div class="search-box">
-                <input type="text" placeholder="Buscar galletas...">
-                <button><i class="fas fa-search"></i></button>
-            </div>
-        </section>
-
-        <section class="empty-state">
-            <i class="fas fa-cookie"></i>
-            <h2>No hay galletas disponibles en este momento</h2>
-            <p>Estamos horneando nuevas delicias para ti. Muy pronto tendrás a disposición nuestra exquisita selección de galletas premium recién horneadas.</p>
-            <a href="#" class="back-button"><i class="fas fa-home"></i> Volver al inicio</a>
-        </section>
-    </div>
-
-    <div class="cart-section">
-        <a href="#" class="cart-button">
-            <i class="fas fa-shopping-cart"></i> Ver Carrito
-            <span class="cart-count">0</span>
-        </a>
-    </div>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 Galletas Premium. Todos los derechos reservados.</p>
         </div>
-    </footer>
+    </div>
+</div>
 
-    <script>
-        // Efecto de animación para el botón del carrito
-        document.querySelector('.cart-button').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Tu carrito está vacío. Agrega algunas galletas deliciosas cuando estén disponibles.');
-        });
-        
-        // Efecto de animación para el botón de volver al inicio
-        document.querySelector('.back-button').addEventListener('click', function(e) {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    </script>
-</body>
-</html>
+<!-- Filtros y búsqueda -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold" style="color: #2c3e50;">
+                                <i class="fas fa-list me-2"></i>Categoría
+                            </label>
+                            <select class="form-select" style="border-color: #e0e0e0;">
+                                <option selected>Todas las Galletas</option>
+                                <option value="1">Con Chispas de Chocolate</option>
+                                <option value="2">De Avena y Pasas</option>
+                                <option value="3">De Mantequilla</option>
+                                <option value="4">Sin Gluten</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold" style="color: #2c3e50;">
+                                <i class="fas fa-tag me-2"></i>Precio
+                            </label>
+                            <select class="form-select" style="border-color: #e0e0e0;">
+                                <option selected>Todos los Precios</option>
+                                <option value="1">Hasta $50</option>
+                                <option value="2">$50 - $100</option>
+                                <option value="3">$100 - $200</option>
+                                <option value="4">Más de $200</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold" style="color: #2c3e50;">
+                                <i class="fas fa-fire me-2"></i>Popularidad
+                            </label>
+                            <select class="form-select" style="border-color: #e0e0e0;">
+                                <option selected>Más Relevantes</option>
+                                <option value="1">Más Populares</option>
+                                <option value="2">Mejor Calificadas</option>
+                                <option value="3">Novedades</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Buscar galletas..." style="border-color: #e0e0e0;">
+                                <button class="btn" type="button" style="background-color: #8b5a2b; color: white;">
+                                    <i class="fas fa-search"></i> Buscar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Catálogo de galletas -->
+<div class="container mb-5">
+    {% if galletas %}
+    <div class="row">
+        {% for galleta in galletas %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card h-100 border-0 shadow-sm hover-lift">
+                <div class="position-relative">
+                    {% if galleta.imagen %}
+                    <img src="{{ galleta.imagen.url }}" class="card-img-top" alt="{{ galleta.nombre }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px; background-color: #f9f5f0;">
+                        <i class="fas fa-cookie-bite fa-3x" style="color: #d4c1a6;"></i>
+                    </div>
+                    {% endif %}
+                    {% if galleta.destacado %}
+                    <span class="position-absolute top-0 start-0 m-3 badge" style="background-color: #e8a628; color: #2c3e50;">
+                        <i class="fas fa-star me-1"></i>Destacado
+                    </span>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title mb-2" style="color: #2c3e50;">{{ galleta.nombre }}</h5>
+                    <p class="card-text text-muted small mb-3">{{ galleta.descripcion|truncatechars:100 }}</p>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold fs-5" style="color: #8b5a2b;">${{ galleta.precio }}</span>
+                        {% if galleta.stock > 0 %}
+                        <span class="badge" style="background-color: #27ae60; color: white;">
+                            <i class="fas fa-check me-1"></i>Disponible
+                        </span>
+                        {% else %}
+                        <span class="badge" style="background-color: #e74c3c; color: white;">
+                            <i class="fas fa-times me-1"></i>Agotado
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer border-0 bg-white">
+                    <div class="d-grid gap-2">
+                        {% if galleta.stock > 0 %}
+                        <button class="btn btn-sm" style="background-color: #8b5a2b; color: white;">
+                            <i class="fas fa-shopping-cart me-2"></i>Añadir al Carrito
+                        </button>
+                        {% else %}
+                        <button class="btn btn-sm btn-outline-secondary" disabled>
+                            <i class="fas fa-bell me-2"></i>Notificarme
+                        </button>
+                        {% endif %}
+                        <button class="btn btn-sm btn-outline" style="border-color: #8b5a2b; color: #8b5a2b;">
+                            <i class="fas fa-eye me-2"></i>Ver Detalles
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Paginación -->
+    {% if galletas.has_other_pages %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if galletas.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ galletas.previous_page_number }}" style="color: #8b5a2b;">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            </li>
+            {% endif %}
+            
+            {% for num in galletas.paginator.page_range %}
+                {% if galletas.number == num %}
+                <li class="page-item active">
+                    <span class="page-link" style="background-color: #8b5a2b; border-color: #8b5a2b;">{{ num }}</span>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ num }}" style="color: #8b5a2b;">{{ num }}</a>
+                </li>
+                {% endif %}
+            {% endfor %}
+            
+            {% if galletas.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ galletas.next_page_number }}" style="color: #8b5a2b;">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+    
+    {% else %}
+    <!-- Estado vacío -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-lg text-center py-5">
+                <div class="card-body">
+                    <i class="fas fa-cookie-bite fa-5x mb-4" style="color: #d4c1a6;"></i>
+                    <h3 class="card-title mb-3" style="color: #2c3e50;">No hay galletas disponibles en este momento</h3>
+                    <p class="card-text text-muted mb-4">
+                        Estamos horneando nuevas delicias para ti. Muy pronto tendrás a disposición nuestra exquisita selección de galletas premium recién horneadas.
+                    </p>
+                    <a href="{% url 'home' %}" class="btn" style="background-color: #8b5a2b; color: white;">
+                        <i class="fas fa-home me-2"></i>Volver al Inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Beneficios de compra -->
+<div class="container-fluid py-4 mb-5" style="background-color: #e8d8c3;">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 mb-3">
+                <i class="fas fa-shipping-fast fa-2x mb-2" style="color: #8b5a2b;"></i>
+                <h6 style="color: #2c3e50;">Envío Gratis +$500</h6>
+            </div>
+            <div class="col-md-3 mb-3">
+                <i class="fas fa-shield-alt fa-2x mb-2" style="color: #8b5a2b;"></i>
+                <h6 style="color: #2c3e50;">Compra Segura</h6>
+            </div>
+            <div class="col-md-3 mb-3">
+                <i class="fas fa-undo fa-2x mb-2" style="color: #8b5a2b;"></i>
+                <h6 style="color: #2c3e50;">Devoluciones Fáciles</h6>
+            </div>
+            <div class="col-md-3 mb-3">
+                <i class="fas fa-headset fa-2x mb-2" style="color: #8b5a2b;"></i>
+                <h6 style="color: #2c3e50;">Soporte 24/7</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .card-img-top {
+        border-radius: 8px 8px 0 0;
+    }
+</style>
+{% endblock %}
