@@ -1,4 +1,3 @@
-# accounts/views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -31,9 +30,3 @@ def login_view(request):
         form = AuthenticationForm()
 
     return render(request, 'registration/login.html', {'form': form})
-
-# ELIMINA estas funciones de accounts/views.py (móvelas a admin_core):
-# def seleccionar_metodo_pago(request):
-# def pago_stripe(request):
-# def pago_oxxo(request):
-# def recibo(request):

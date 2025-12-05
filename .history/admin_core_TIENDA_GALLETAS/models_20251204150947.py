@@ -1,8 +1,9 @@
 # admin_core_TIENDA_GALLETAS/models.py
 from django.db import models
 from django.contrib.auth.models import User
+from decimal import Decimal
 
-# 1. MODELOS BÁSICOS
+# Modelos INDEPENDIENTES
 class Cliente(models.Model):
     nombre = models.CharField(max_length=100)
     telefono = models.IntegerField()
@@ -23,7 +24,7 @@ class Galleta(models.Model):
     def __str__(self):
         return self.nombre
 
-# 2. MODELO Orden
+# Modelo Orden (definirlo ANTES de Pago)
 class Orden(models.Model):
     METODO_PAGO_CHOICES = [
         ('stripe', 'Tarjeta (Stripe)'),
@@ -53,7 +54,7 @@ class Orden(models.Model):
     def __str__(self):
         return f"Orden #{self.id} - {self.usuario.username}"
 
-# 3. MODELO Pago
+# Modelo Pago (AHORA SÍ puede referenciar a Orden)
 class Pago(models.Model):
     ESTADO_CHOICES = [
         ("PAGADO", "Pagado"),
@@ -61,7 +62,7 @@ class Pago(models.Model):
         ("EN_PROCESO", "En proceso"),
     ]
     
-    pedido = models.ForeignKey('Orden', on_delete=models.CASCADE)
+    pedido = models.ForeignKey('Orden', on_delete=models.CASCADE)  # Usa 'Orden' como string
     direccion_envio = models.CharField(max_length=100)
     fecha_envio = models.DateField()
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default="EN_PROCESO")
@@ -69,7 +70,7 @@ class Pago(models.Model):
     def __str__(self):
         return f"Pago Orden #{self.pedido.id} - {self.estado}"
 
-# 4. MODELO ItemCarrito para Orden
+# Modelo ItemCarrito para Orden
 class ItemCarrito(models.Model):
     orden = models.ForeignKey('Orden', on_delete=models.CASCADE, related_name='items')
     nombre_producto = models.CharField(max_length=200)
@@ -79,7 +80,7 @@ class ItemCarrito(models.Model):
     def subtotal(self):
         return self.cantidad * self.precio
 
-# 5. MODELOS de Venta
+# Otros modelos
 class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
     cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
@@ -101,7 +102,6 @@ class DetalleVenta(models.Model):
     def __str__(self):
         return f"Detalle {self.id_detalle_venta} - {self.galleta.nombre} ({self.cantidad})"
 
-# 6. MODELOS de Carrito
 class Carrito(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
@@ -126,24 +126,3 @@ class CarritoItem(models.Model):
     @property
     def subtotal(self):
         return self.galleta.precio * self.cantidad
-    
-
-class ContactMessage(models.Model):
-    nombre = models.CharField(max_length=100)
-    email = models.EmailField()
-    asunto = models.CharField(max_length=200)
-    mensaje = models.TextField()
-    newsletter = models.BooleanField(default=False)
-    leido = models.BooleanField(default=False)
-    respondido = models.BooleanField(default=False)
-    
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    class Meta:
-        ordering = ['-created_at']
-        verbose_name = 'Mensaje de Contacto'
-        verbose_name_plural = 'Mensajes de Contacto'
-    
-    def __str__(self):
-        return f"{self.nombre} - {self.asunto}"

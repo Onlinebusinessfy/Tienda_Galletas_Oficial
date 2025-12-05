@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Método de Pago - Dalgona Cookies</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-brown: #8b5a2b;
+            --secondary-gold: #e8a628;
+            --light-beige: #f9f5f0;
+            --dark-brown: #2c3e50;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .payment-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        
+        .payment-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+            background: white;
+        }
+        
+        .payment-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .payment-header {
+            background: linear-gradient(135deg, var(--primary-brown) 0%, var(--secondary-gold) 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 1.5rem;
+        }
+        
+        .payment-option {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+        
+        .payment-option:hover {
+            border-color: var(--primary-brown);
+            background-color: rgba(139, 90, 43, 0.05);
+        }
+        
+        .payment-option.selected {
+            border-color: var(--primary-brown);
+            background-color: rgba(139, 90, 43, 0.1);
+        }
+        
+        .payment-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-brown) 0%, var(--secondary-gold) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+        
+        .payment-icon i {
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .btn-checkout {
+            background: linear-gradient(135deg, var(--primary-brown) 0%, var(--secondary-gold) 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-checkout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 90, 43, 0.3);
+            color: white;
+        }
+        
+        .order-summary {
+            background-color: var(--light-beige);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .summary-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-brown);
+        }
+        
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        .breadcrumb-item a {
+            color: var(--primary-brown);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    {% include 'includes/navbar.html' %}
+
+    <!-- Contenido Principal -->
+    <div class="container payment-container">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'carrito' %}">Carrito</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Método de Pago</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <!-- Columna Izquierda: Métodos de Pago -->
+            <div class="col-lg-8 mb-4">
+                <div class="payment-card">
+                    <div class="card-header payment-header">
+                        <h2 class="mb-0"><i class="fas fa-credit-card me-2"></i> Selecciona Método de Pago</h2>
+                        <p class="mb-0 mt-2 opacity-75">Elige cómo quieres pagar tu pedido de galletas</p>
+                    </div>
+                    
+                    <div class="card-body p-4">
+                        <form method="POST" action="{% url 'seleccionar_pago' %}">
+                            {% csrf_token %}
+                            
+                            <div class="row">
+                                <!-- Opción Tarjeta -->
+                                <div class="col-md-6 mb-3">
+                                    <div class="payment-option" onclick="selectPayment('stripe')">
+                                        <div class="payment-icon">
+                                            <i class="fas fa-credit-card"></i>
+                                        </div>
+                                        <h5 class="text-center">Tarjeta de Crédito/Débito</h5>
+                                        <p class="text-center text-muted mb-0">
+                                            <small>Pago seguro con Stripe</small>
+                                        </p>
+                                        <div class="form-check text-center mt-3">
+                                            <input class="form-check-input" type="radio" name="metodo_pago" 
+                                                   id="stripe" value="stripe" required>
+                                            <label class="form-check-label" for="stripe">
+                                                Seleccionar
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Opción OXXO -->
+                                <div class="col-md-6 mb-3">
+                                    <div class="payment-option" onclick="selectPayment('oxxo')">
+                                        <div class="payment-icon">
+                                            <i class="fas fa-store"></i>
+                                        </div>
+                                        <h5 class="text-center">Pago en OXXO</h5>
+                                        <p class="text-center text-muted mb-0">
+                                            <small>Paga en efectivo en cualquier tienda</small>
+                                        </p>
+                                        <div class="form-check text-center mt-3">
+                                            <input class="form-check-input" type="radio" name="metodo_pago" 
+                                                   id="oxxo" value="oxxo">
+                                            <label class="form-check-label" for="oxxo">
+                                                Seleccionar
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Información de Contacto -->
+                            <div class="mt-4">
+                                <h5><i class="fas fa-envelope me-2"></i> Información para el recibo</h5>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email para envío de recibo</label>
+                                    <input type="email" class="form-control" id="email" name="email" 
+                                           value="{{ user.email|default:'' }}" required
+                                           placeholder="tu@email.com">
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-checkout btn-lg">
+                                    <i class="fas fa-lock me-2"></i> Continuar al Pago
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Columna Derecha: Resumen del Pedido -->
+            <div class="col-lg-4">
+                <div class="order-summary">
+                    <h4 class="mb-3"><i class="fas fa-receipt me-2"></i> Resumen del Pedido</h4>
+                    
+                    {% if request.session.carrito %}
+                        {% for item in request.session.carrito %}
+                        <div class="summary-item">
+                            <div>
+                                <strong>{{ item.nombre }}</strong>
+                                <br>
+                                <small class="text-muted">Cantidad: {{ item.cantidad }}</small>
+                            </div>
+                            <div>${{ item.precio|floatformat:2 }}</div>
+                        </div>
+                        {% endfor %}
+                        
+                        <hr>
+                        
+                        <div class="summary-item">
+                            <span>Subtotal</span>
+                            <span>${{ subtotal|floatformat:2 }}</span>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <span>Envío</span>
+                            <span>${{ envio|default:"0.00" }}</span>
+                        </div>
+                        
+                        <div class="summary-item summary-total">
+                            <span>Total</span>
+                            <span>${{ total|floatformat:2 }}</span>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-shopping-cart fa-2x text-muted mb-3"></i>
+                            <p class="text-muted">Tu carrito está vacío</p>
+                            <a href="{% url 'galleta' %}" class="btn btn-outline-primary">
+                                Ver Galletas
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Información de Seguridad -->
+                <div class="card border-0 shadow-sm mt-3">
+                    <div class="card-body">
+                        <h6><i class="fas fa-shield-alt text-success me-2"></i> Compra Segura</h6>
+                        <p class="small text-muted mb-0">
+                            <i class="fas fa-lock me-1"></i> Tus datos están protegidos con encriptación SSL
+                            <br>
+                            <i class="fas fa-check-circle me-1"></i> Pago 100% seguro
+                            <br>
+                            <i class="fas fa-truck me-1"></i> Envío en 24-48 horas
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (si existe) -->
+    {% if 'includes/footer.html'|template_exists %}
+        {% include 'includes/footer.html' %}
+    {% endif %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Selección visual de método de pago
+        function selectPayment(method) {
+            // Desmarcar todas las opciones
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Marcar la seleccionada
+            const selectedOption = document.querySelector(`.payment-option[onclick*="${method}"]`);
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+            }
+            
+            // Marcar el radio button
+            const radio = document.getElementById(method);
+            if (radio) {
+                radio.checked = true;
+            }
+        }
+        
+        // Inicializar si hay método seleccionado por defecto
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedRadio = document.querySelector('input[name="metodo_pago"]:checked');
+            if (selectedRadio) {
+                selectPayment(selectedRadio.value);
+            }
+            
+            // Efecto hover en opciones
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const method = this.getAttribute('onclick').match(/'(\w+)'/)[1];
+                    selectPayment(method);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

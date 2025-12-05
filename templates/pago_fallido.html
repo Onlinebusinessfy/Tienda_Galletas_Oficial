@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago Fallido - Dalgona Cookies</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-brown: #8b5a2b;
+            --secondary-gold: #e8a628;
+            --error-red: #dc3545;
+            --warning-orange: #ff9800;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe6e6 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .error-container {
+            max-width: 700px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+        
+        .error-card {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(220, 53, 69, 0.1);
+            overflow: hidden;
+            text-align: center;
+            padding: 3rem;
+            position: relative;
+            border: 3px solid var(--error-red);
+        }
+        
+        .error-icon {
+            width: 120px;
+            height: 120px;
+            background: var(--error-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: white;
+            font-size: 4rem;
+            box-shadow: 0 10px 30px rgba(220, 53, 69, 0.3);
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .error-pulse {
+            animation: pulse-red 2s infinite;
+        }
+        
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(220, 53, 69, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+        }
+        
+        .btn-retry {
+            background: linear-gradient(135deg, var(--error-red) 0%, #c82333 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-retry:hover {
+            background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(220, 53, 69, 0.3);
+            color: white;
+        }
+        
+        .btn-alternative {
+            background: linear-gradient(135deg, var(--primary-brown) 0%, var(--secondary-gold) 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-alternative:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(139, 90, 43, 0.3);
+            color: white;
+        }
+        
+        .troubleshooting {
+            background: linear-gradient(135deg, #fff8e6 0%, #fff0cc 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+            border-left: 5px solid var(--warning-orange);
+        }
+        
+        .error-details {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #666;
+            text-align: left;
+        }
+        
+        .support-card {
+            background: linear-gradient(135deg, #e6f7ff 0%, #f0f9ff 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .payment-method {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 150px;
+        }
+        
+        .payment-method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .payment-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-brown);
+        }
+        
+        .countdown {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--error-red);
+            margin: 1rem 0;
+        }
+        
+        .retry-suggestion {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    {% include 'includes/navbar.html' %}
+
+    <!-- Contenido Principal -->
+    <div class="error-container">
+        <div class="error-card">
+            <!-- Icono de error -->
+            <div class="error-icon error-pulse">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            
+            <!-- Mensaje principal -->
+            <h1 class="mb-3" style="color: var(--error-red);">¡Pago No Completado!</h1>
+            <h4 class="mb-4">Hubo un problema con tu transacción</h4>
+            
+            <!-- Detalles del error -->
+            <div class="error-details">
+                <p class="mb-1"><strong>Código de error:</strong> {{ error_code|default:"TRANSACTION_FAILED" }}</p>
+                <p class="mb-1"><strong>Mensaje:</strong> {{ error_message|default:"No se pudo procesar el pago" }}</p>
+                <p class="mb-0"><strong>Orden:</strong> #{{ orden_id|default:"N/A" }}</p>
+            </div>
+            
+            <!-- Contador para reintento automático -->
+            <div class="countdown" id="retry-countdown">
+                Reintentando en: <span id="countdown-number">10</span>s
+            </div>
+            
+            <!-- Solución de problemas -->
+            <div class="troubleshooting">
+                <h5 class="mb-3"><i class="fas fa-tools me-2"></i> Posibles soluciones:</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="fas fa-credit-card me-3" style="color: var(--primary-brown);"></i>
+                            <div>
+                                <strong>Verifica los datos de tu tarjeta</strong>
+                                <p class="small mb-0">Número, fecha de expiración y CVV</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="fas fa-money-bill-wave me-3" style="color: var(--primary-brown);"></i>
+                            <div>
+                                <strong>Revisa tu saldo o límite</strong>
+                                <p class="small mb-0">Asegúrate de tener fondos suficientes</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="fas fa-wifi me-3" style="color: var(--primary-brown);"></i>
+                            <div>
+                                <strong>Comprueba tu conexión</strong>
+                                <p class="small mb-0">Intenta con una red más estable</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="fas fa-sync-alt me-3" style="color: var(--primary-brown);"></i>
+                            <div>
+                                <strong>Actualiza tu navegador</strong>
+                                <p class="small mb-0">Usa la última versión disponible</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Métodos alternativos de pago -->
+            <div class="retry-suggestion">
+                <h5 class="mb-3"><i class="fas fa-exchange-alt me-2"></i> ¿Prefieres otro método?</h5>
+                <div class="payment-methods">
+                    <div class="payment-method" onclick="window.location.href='{% url 'seleccionar_pago' %}'">
+                        <div class="payment-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <h6 class="mb-2">Pago en OXXO</h6>
+                        <p class="small mb-0 text-muted">Paga en efectivo</p>
+                    </div>
+                    
+                    <div class="payment-method" onclick="window.location.href='{% url 'seleccionar_pago' %}'">
+                        <div class="payment-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h6 class="mb-2">Transferencia</h6>
+                        <p class="small mb-0 text-muted">Banco a banco</p>
+                    </div>
+                    
+                    <div class="payment-method" onclick="window.location.href='{% url 'seleccionar_pago' %}'">
+                        <div class="payment-icon">
+                            <i class="fab fa-paypal"></i>
+                        </div>
+                        <h6 class="mb-2">PayPal</h6>
+                        <p class="small mb-0 text-muted">Pago internacional</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Soporte -->
+            <div class="support-card">
+                <div class="d-flex align-items-start">
+                    <i class="fas fa-headset fa-2x me-3" style="color: var(--primary-brown);"></i>
+                    <div>
+                        <h6 class="mb-2">¿Necesitas ayuda?</h6>
+                        <p class="mb-2 small">
+                            Nuestro equipo de soporte está disponible para ayudarte.
+                        </p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="mailto:soporte@dalgona-cookies.com" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-envelope me-1"></i> Email
+                            </a>
+                            <a href="tel:+525512345678" class="btn btn-outline-success btn-sm">
+                                <i class="fas fa-phone me-1"></i> Teléfono
+                            </a>
+                            <a href="https://wa.me/525512345678" class="btn btn-outline-success btn-sm" style="background: #25D366; color: white; border-color: #25D366;">
+                                <i class="fab fa-whatsapp me-1"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Acciones -->
+            <div class="d-flex flex-wrap justify-content-center mt-4">
+                <button class="btn-retry" onclick="retryPayment()" id="retry-button">
+                    <i class="fas fa-redo me-2"></i> Reintentar Pago
+                </button>
+                
+                <a href="{% url 'seleccionar_pago' %}" class="btn-alternative">
+                    <i class="fas fa-exchange-alt me-2"></i> Cambiar Método
+                </a>
+                
+                <a href="{% url 'carrito' %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-shopping-cart me-2"></i> Ver Carrito
+                </a>
+                
+                <a href="{% url 'home' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-home me-2"></i> Ir al Inicio
+                </a>
+            </div>
+            
+            <!-- Garantía -->
+            <p class="mt-4 mb-0 text-muted small">
+                <i class="fas fa-shield-alt me-1" style="color: var(--primary-brown);"></i>
+                Tu información está segura. No se realizaron cargos a tu tarjeta.
+            </p>
+        </div>
+        
+        <!-- Información adicional -->
+        <div class="card border-0 shadow-sm mt-4">
+            <div class="card-body">
+                <h6 class="mb-3"><i class="fas fa-info-circle me-2"></i> ¿Por qué fallan los pagos?</h6>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-ban text-danger me-2"></i>
+                            <span class="small">Fondos insuficientes</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-clock text-warning me-2"></i>
+                            <span class="small">Tiempo de espera agotado</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-globe text-info me-2"></i>
+                            <span class="small">Problemas de conexión</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="mb-0 small text-muted mt-2">
+                    Estos errores son comunes y generalmente se resuelven fácilmente.
+                    Si el problema persiste, contacta con tu banco.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (si existe) -->
+    {% if 'includes/footer.html'|template_exists %}
+        {% include 'includes/footer.html' %}
+    {% endif %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Contador regresivo para reintento automático
+        let countdown = 10;
+        const countdownElement = document.getElementById('countdown-number');
+        const countdownInterval = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('retry-countdown').style.display = 'none';
+            }
+        }, 1000);
+        
+        // Función para reintentar pago
+        function retryPayment() {
+            const button = document.getElementById('retry-button');
+            const originalText = button.innerHTML;
+            
+            // Mostrar estado de carga
+            button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Procesando...';
+            button.disabled = true;
+            
+            // Simular reintento (en producción, esto redirigiría al proceso de pago)
+            setTimeout(() => {
+                // Aquí iría la lógica real de reintento
+                // Por ahora, solo simulamos y recargamos la página
+                window.location.reload();
+            }, 2000);
+        }
+        
+        // Reintento automático cuando termina el contador
+        setTimeout(() => {
+            if (confirm('¿Deseas reintentar el pago?')) {
+                retryPayment();
+            }
+        }, 10000);
+        
+        // Efecto de vibración en el icono de error
+        function shakeErrorIcon() {
+            const icon = document.querySelector('.error-icon');
+            icon.style.animation = 'none';
+            setTimeout(() => {
+                icon.style.animation = 'shake 0.5s ease-in-out, pulse-red 2s infinite';
+            }, 10);
+        }
+        
+        // Vibrar el icono cada 5 segundos
+        setInterval(shakeErrorIcon, 5000);
+        
+        // Animación de entrada
+        document.addEventListener('DOMContentLoaded', function() {
+            const errorCard = document.querySelector('.error-card');
+            
+            // Estado inicial
+            errorCard.style.opacity = '0';
+            errorCard.style.transform = 'translateY(50px) scale(0.9)';
+            
+            // Animación
+            setTimeout(() => {
+                errorCard.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                errorCard.style.opacity = '1';
+                errorCard.style.transform = 'translateY(0) scale(1)';
+            }, 300);
+            
+            // Efecto de parpadeo en el título
+            const title = document.querySelector('h1');
+            let blinkCount = 0;
+            const blinkInterval = setInterval(() => {
+                if (blinkCount < 3) {
+                    title.style.opacity = title.style.opacity === '0.7' ? '1' : '0.7';
+                    blinkCount++;
+                } else {
+                    clearInterval(blinkInterval);
+                    title.style.opacity = '1';
+                }
+            }, 500);
+            
+            // Resaltar sugerencias una por una
+            const suggestions = document.querySelectorAll('.troubleshooting .d-flex');
+            suggestions.forEach((suggestion, index) => {
+                setTimeout(() => {
+                    suggestion.style.transform = 'translateX(10px)';
+                    suggestion.style.transition = 'transform 0.3s ease';
+                    
+                    setTimeout(() => {
+                        suggestion.style.transform = 'translateX(0)';
+                    }, 300);
+                }, 1000 + (index * 300));
+            });
+        });
+        
+        // Mostrar detalles de error si están disponibles
+        const errorDetails = document.querySelector('.error-details');
+        if (errorDetails) {
+            errorDetails.addEventListener('click', function() {
+                this.classList.toggle('expanded');
+                if (this.classList.contains('expanded')) {
+                    this.style.maxHeight = 'none';
+                } else {
+                    this.style.maxHeight = '100px';
+                }
+            });
+        }
+        
+        // Copiar número de orden al portapapeles
+        function copyOrderNumber() {
+            const orderNumber = '{{ orden_id|default:"N/A" }}';
+            navigator.clipboard.writeText(orderNumber).then(() => {
+                alert('Número de orden copiado al portapapeles');
+            });
+        }
+    </script>
+</body>
+</html>

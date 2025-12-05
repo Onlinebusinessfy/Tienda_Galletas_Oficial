@@ -1,4 +1,3 @@
-# admin_core_TIENDA_GALLETAS/urls.py
 from django.urls import path
 from . import views
 
@@ -6,7 +5,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('formulario/', views.formulario, name='formulario'),
     path('about/', views.about, name='about'),
-    path('galleta/', views.galleta_view, name='galleta'),
+    path('galleta/', views.galleta_view, name='galleta'),  # ¡Cambiado a galleta_view!
     path('galleta_create/', views.galleta_create, name='galleta_create'),
     path('orden/', views.orden, name='orden'),
     path('venta/', views.venta, name='venta'),
@@ -17,10 +16,12 @@ urlpatterns = [
     path('carrito/actualizar/<int:item_id>/', views.actualizar_cantidad, name='actualizar_cantidad'),
     path('pago/', views.pago, name='pago'),
     path('procesar-pago/', views.procesar_pago, name='procesar_pago'),
+    
+    # NUEVAS URLs PARA STRIPE Y OXXO
     path('seleccionar-pago/', views.seleccionar_metodo_pago, name='seleccionar_pago'),
-    path('pago-stripe/', views.pago_stripe, name='pago_stripe'),
-    path('pago-oxxo/', views.pago_oxxo, name='pago_oxxo'),
-    path('recibo/', views.recibo, name='recibo'),
+    path('pago-stripe/', views.pago_stripe, name='pago_stripe'),  # ¡NUEVA!
+    path('pago-oxxo/', views.pago_oxxo, name='pago_oxxo'),  # ¡NUEVA!
+    path('recibo/', views.recibo, name='recibo'),  # ¡NUEVA!
     path('pago-stripe/webhook/', views.pago_stripe_webhook, name='stripe_webhook'),
     path('verificar-pago/<int:orden_id>/', views.verificar_pago, name='verificar_pago'),
     path('historial-pedidos/', views.historial_pedidos, name='historial_pedidos'),

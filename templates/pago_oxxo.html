@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago en OXXO - Dalgona Cookies</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-brown: #8b5a2b;
+            --secondary-gold: #e8a628;
+            --oxxo-red: #C8102E;
+            --oxxo-yellow: #FFD100;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #fff5e6 0%, #ffeccc 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .oxxo-container {
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        
+        .oxxo-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(200, 16, 46, 0.1);
+            overflow: hidden;
+            border: 3px solid var(--oxxo-red);
+        }
+        
+        .oxxo-header {
+            background: linear-gradient(135deg, var(--oxxo-red) 0%, #e00a2e 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .oxxo-logo {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .reference-box {
+            background: #f8f9fa;
+            border: 3px dashed var(--oxxo-red);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .reference-number {
+            font-family: 'Courier New', monospace;
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 5px;
+            color: var(--oxxo-red);
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .copy-btn {
+            background: var(--oxxo-red);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #a50d25;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(200, 16, 46, 0.3);
+            color: white;
+        }
+        
+        .instructions {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff0cc 100%);
+            border-left: 5px solid var(--secondary-gold);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+        
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-brown);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        
+        .expiry-box {
+            background: #fff5f5;
+            border: 2px solid var(--oxxo-red);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+        
+        .countdown {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--oxxo-red);
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: #f8f9fa;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--oxxo-red);
+        }
+        
+        .btn-print {
+            background: white;
+            color: var(--oxxo-red);
+            border: 2px solid var(--oxxo-red);
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-print:hover {
+            background: var(--oxxo-red);
+            color: white;
+        }
+        
+        .back-link {
+            color: var(--primary-brown);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .alert-warning {
+            border-left: 5px solid var(--secondary-gold);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    {% include 'includes/navbar.html' %}
+
+    <!-- Contenido Principal -->
+    <div class="oxxo-container">
+        <div class="oxxo-card">
+            <!-- Header -->
+            <div class="oxxo-header">
+                <a href="{% url 'seleccionar_pago' %}" class="back-link position-absolute start-0 ms-4" 
+                   style="color: white; text-decoration: none;">
+                    <i class="fas fa-arrow-left me-2"></i> Volver
+                </a>
+                <div class="oxxo-logo">OXXO</div>
+                <h2 class="mb-0">Paga en Efectivo</h2>
+                <p class="mb-0 mt-2 opacity-90">En cualquier tienda OXXO</p>
+            </div>
+            
+            <!-- Cuerpo -->
+            <div class="card-body p-4">
+                <!-- Información del Pedido -->
+                <div class="alert alert-info d-flex align-items-center">
+                    <i class="fas fa-info-circle fa-2x me-3" style="color: var(--primary-brown);"></i>
+                    <div>
+                        <strong>Orden #{{ orden.id }}</strong> - ${{ monto }}
+                        <br>
+                        <small>Cliente: {{ orden.usuario.get_full_name|default:orden.usuario.username }}</small>
+                    </div>
+                </div>
+                
+                <!-- Referencia -->
+                <div class="reference-box">
+                    <h4 class="mb-3"><i class="fas fa-barcode me-2"></i> Número de Referencia</h4>
+                    <div class="reference-number" id="referenceNumber">{{ referencia }}</div>
+                    <p class="text-muted mb-3">Muestra este código en cualquier tienda OXXO</p>
+                    
+                    <button class="copy-btn" onclick="copyReference()">
+                        <i class="fas fa-copy me-2"></i> Copiar Referencia
+                    </button>
+                </div>
+                
+                <!-- Código QR (simulado) -->
+                <div class="text-center mb-4">
+                    <div class="qr-code mb-3">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <p class="small text-muted">Escanea este código QR en OXXO</p>
+                </div>
+                
+                <!-- Tiempo de Caducidad -->
+                <div class="expiry-box">
+                    <h5 class="mb-2"><i class="fas fa-clock me-2"></i> Válido hasta:</h5>
+                    <div class="countdown mb-2">{{ caducidad|date:"d/m/Y H:i" }}</div>
+                    <p class="small text-muted mb-0">Tienes 72 horas para realizar el pago</p>
+                    <div id="countdown-timer" class="mt-2"></div>
+                </div>
+                
+                <!-- Instrucciones -->
+                <div class="instructions">
+                    <h5 class="mb-3"><i class="fas fa-list-ol me-2"></i> Cómo pagar en OXXO:</h5>
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="step-icon">1</div>
+                        <div>
+                            <strong>Acude a cualquier tienda OXXO</strong>
+                            <p class="mb-0 small text-muted">Más de 18,000 tiendas en todo México</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="step-icon">2</div>
+                        <div>
+                            <strong>Entrega la referencia al cajero</strong>
+                            <p class="mb-0 small text-muted">14 dígitos: <strong>{{ referencia }}</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="step-icon">3</div>
+                        <div>
+                            <strong>Paga el monto exacto</strong>
+                            <p class="mb-0 small text-muted">${{ monto }} en efectivo</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center">
+                        <div class="step-icon">4</div>
+                        <div>
+                            <strong>Guarda tu comprobante</strong>
+                            <p class="mb-0 small text-muted">Es tu comprobante de pago</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Acciones -->
+                <div class="d-flex justify-content-between mt-4">
+                    <button class="btn-print" onclick="window.print()">
+                        <i class="fas fa-print me-2"></i> Imprimir
+                    </button>
+                    
+                    <a href="{% url 'verificar_pago' orden.id %}" class="btn btn-success">
+                        <i class="fas fa-check-circle me-2"></i> Ya pagué, verificar
+                    </a>
+                    
+                    <a href="{% url 'home' %}" class="btn btn-outline-primary">
+                        <i class="fas fa-home me-2"></i> Ir al inicio
+                    </a>
+                </div>
+                
+                <!-- Notas importantes -->
+                <div class="alert alert-warning mt-4">
+                    <h6><i class="fas fa-exclamation-triangle me-2"></i> Importante:</h6>
+                    <ul class="mb-0 small">
+                        <li>El pago puede tardar hasta 2 horas en reflejarse en nuestro sistema</li>
+                        <li>Guarda tu comprobante OXXO por cualquier aclaración</li>
+                        <li>Tu pedido se procesará una vez confirmado el pago</li>
+                        <li>Si tienes problemas, contáctanos: contacto@dalgona-cookies.com</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (si existe) -->
+    {% if 'includes/footer.html'|template_exists %}
+        {% include 'includes/footer.html' %}
+    {% endif %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Copiar referencia al portapapeles
+        function copyReference() {
+            const referenceText = document.getElementById('referenceNumber').textContent;
+            navigator.clipboard.writeText(referenceText).then(() => {
+                // Mostrar mensaje de éxito
+                const button = event.target.closest('button');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check me-2"></i> ¡Copiado!';
+                button.style.background = '#28a745';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                }, 2000);
+            });
+        }
+        
+        // Contador regresivo
+        function updateCountdown() {
+            const expiryDate = new Date('{{ caducidad|date:"c" }}');
+            const now = new Date();
+            const diff = expiryDate - now;
+            
+            if (diff <= 0) {
+                document.getElementById('countdown-timer').innerHTML = 
+                    '<span class="text-danger"><i class="fas fa-exclamation-circle"></i> ¡Caducado!</span>';
+                return;
+            }
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown-timer').innerHTML = 
+                `<strong>${hours}h ${minutes}m ${seconds}s</strong> restantes`;
+        }
+        
+        // Actualizar contador cada segundo
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Ejecutar inmediatamente
+        
+        // Efecto de impresión mejorado
+        window.onbeforeprint = function() {
+            document.querySelector('.oxxo-card').style.boxShadow = 'none';
+            document.querySelector('.oxxo-card').style.border = '1px solid #ddd';
+        };
+        
+        window.onafterprint = function() {
+            document.querySelector('.oxxo-card').style.boxShadow = '';
+            document.querySelector('.oxxo-card').style.border = '3px solid var(--oxxo-red)';
+        };
+        
+        // Animación de entrada
+        document.addEventListener('DOMContentLoaded', function() {
+            const referenceBox = document.querySelector('.reference-box');
+            referenceBox.style.opacity = '0';
+            referenceBox.style.transform = 'scale(0.9)';
+            
+            setTimeout(() => {
+                referenceBox.style.transition = 'all 0.5s ease';
+                referenceBox.style.opacity = '1';
+                referenceBox.style.transform = 'scale(1)';
+            }, 300);
+        });
+    </script>
+</body>
+</html>
