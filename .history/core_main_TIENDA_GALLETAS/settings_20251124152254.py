@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'admin_core_TIENDA_GALLETAS',
     'accounts',
-    
 ]
 
 MIDDLEWARE = [
@@ -66,7 +65,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'admin_core_TIENDA_GALLETAS.views.carrito_context',  # AÑADIDO
             ],
         },
     },
@@ -148,5 +146,3 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD',default='')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast = bool, default = True)
 EMAIL_USE_SSL = config('EMAIL_USE_SSL', cast = bool, default = False)
 DEFAULT_FROM_EMAIL =config('DEFAULT_FROM_EMAIL', default = EMAIL_HOST_USER) 
-SITE_NAME ='Dalgona Cookies'
-SITE_URL = 'https://dalgona-cookies.com'

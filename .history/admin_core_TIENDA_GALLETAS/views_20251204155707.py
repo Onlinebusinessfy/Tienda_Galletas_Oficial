@@ -381,9 +381,3 @@ def handler404(request, exception):
 
 def handler500(request):
     return render(request, '500.html', status=500)
-
-def carrito_context(request):
-    """Context processor para el carrito"""
-    carrito_session = request.session.get('carrito', {})
-    cart_count = sum(item.get('cantidad', 0) for item in carrito_session.values())
-    return {'cart_count': cart_count}

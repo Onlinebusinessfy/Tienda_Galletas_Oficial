@@ -126,24 +126,3 @@ class CarritoItem(models.Model):
     @property
     def subtotal(self):
         return self.galleta.precio * self.cantidad
-    
-
-class ContactMessage(models.Model):
-    nombre = models.CharField(max_length=100)
-    email = models.EmailField()
-    asunto = models.CharField(max_length=200)
-    mensaje = models.TextField()
-    newsletter = models.BooleanField(default=False)
-    leido = models.BooleanField(default=False)
-    respondido = models.BooleanField(default=False)
-    
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    class Meta:
-        ordering = ['-created_at']
-        verbose_name = 'Mensaje de Contacto'
-        verbose_name_plural = 'Mensajes de Contacto'
-    
-    def __str__(self):
-        return f"{self.nombre} - {self.asunto}"

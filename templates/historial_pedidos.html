@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Pedidos - Dalgona Cookies</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-brown: #8b5a2b;
+            --secondary-gold: #e8a628;
+            --success-green: #28a745;
+            --warning-orange: #ff9800;
+            --info-blue: #17a2b8;
+        }
+        
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .history-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-brown) 0%, var(--secondary-gold) 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(139, 90, 43, 0.2);
+        }
+        
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary-brown);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-brown);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .order-card {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .order-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: var(--primary-brown);
+        }
+        
+        .order-header {
+            background: #f9f5f0;
+            padding: 1.5rem;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .order-body {
+            padding: 1.5rem;
+        }
+        
+        .order-items {
+            margin-bottom: 1.5rem;
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        
+        .status-badge {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        .status-completado {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success-green);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+        
+        .status-pendiente {
+            background: rgba(255, 152, 0, 0.1);
+            color: var(--warning-orange);
+            border: 1px solid rgba(255, 152, 0, 0.3);
+        }
+        
+        .status-cancelado {
+            background: rgba(220, 53, 69, 0.1);
+            color: var(--error-red);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+        
+        .payment-method-badge {
+            padding: 6px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            background: rgba(23, 162, 184, 0.1);
+            color: var(--info-blue);
+            border: 1px solid rgba(23, 162, 184, 0.3);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-order-action {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-view {
+            background: rgba(139, 90, 43, 0.1);
+            color: var(--primary-brown);
+            border: 1px solid rgba(139, 90, 43, 0.3);
+        }
+        
+        .btn-view:hover {
+            background: var(--primary-brown);
+            color: white;
+        }
+        
+        .btn-reorder {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success-green);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+        
+        .btn-reorder:hover {
+            background: var(--success-green);
+            color: white;
+        }
+        
+        .btn-rate {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+        
+        .btn-rate:hover {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .filters-bar {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .page-link {
+            color: var(--primary-brown);
+            border: 1px solid #dee2e6;
+            margin: 0 3px;
+            border-radius: 10px;
+        }
+        
+        .page-link:hover {
+            background: var(--primary-brown);
+            color: white;
+            border-color: var(--primary-brown);
+        }
+        
+        .page-item.active .page-link {
+            background: var(--primary-brown);
+            border-color: var(--primary-brown);
+            color: white;
+        }
+        
+        .order-timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 1rem;
+        }
+        
+        .order-timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-brown);
+            opacity: 0.3;
+        }
+        
+        .timeline-step {
+            position: relative;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+        }
+        
+        .timeline-step::before {
+            content: '';
+            position: absolute;
+            left: -23px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-brown);
+        }
+        
+        .timeline-step.completed::before {
+            background: var(--success-green);
+        }
+        
+        .timeline-step.current::before {
+            background: var(--secondary-gold);
+            box-shadow: 0 0 0 3px rgba(232, 166, 40, 0.3);
+        }
+        
+        .timeline-date {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.25rem;
+        }
+        
+        .timeline-text {
+            font-size: 0.9rem;
+            color: #333;
+        }
+        
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            .order-card {
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    {% include 'includes/navbar.html' %}
+
+    <!-- Contenido Principal -->
+    <div class="history-container">
+        <!-- Encabezado -->
+        <div class="page-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="mb-2"><i class="fas fa-history me-2"></i> Historial de Pedidos</h1>
+                    <p class="mb-0 opacity-90">Revisa todas tus compras en Dalgona Cookies</p>
+                </div>
+                <div class="no-print">
+                    <button class="btn btn-light" onclick="window.print()">
+                        <i class="fas fa-print me-2"></i> Imprimir Historial
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Estadísticas -->
+        <div class="stats-cards">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <div class="stat-number">{{ total_orders|default:"0" }}</div>
+                <div class="stat-label">Pedidos Totales</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle" style="color: var(--success-green);"></i>
+                </div>
+                <div class="stat-number">{{ completed_orders|default:"0" }}</div>
+                <div class="stat-label">Completados</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock" style="color: var(--warning-orange);"></i>
+                </div>
+                <div class="stat-number">{{ pending_orders|default:"0" }}</div>
+                <div class="stat-label">Pendientes</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-coins" style="color: var(--primary-brown);"></i>
+                </div>
+                <div class="stat-number">${{ total_spent|default:"0.00"|floatformat:2 }}</div>
+                <div class="stat-label">Total Gastado</div>
+            </div>
+        </div>
+        
+        <!-- Filtros -->
+        <div class="filters-bar no-print">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="btn btn-outline-primary active" data-filter="all">
+                            Todos ({{ total_orders|default:"0" }})
+                        </button>
+                        <button class="btn btn-outline-success" data-filter="completado">
+                            <i class="fas fa-check-circle me-1"></i> Completados
+                        </button>
+                        <button class="btn btn-outline-warning" data-filter="pendiente">
+                            <i class="fas fa-clock me-1"></i> Pendientes
+                        </button>
+                        <button class="btn btn-outline-danger" data-filter="cancelado">
+                            <i class="fas fa-times-circle me-1"></i> Cancelados
+                        </button>
+                        <button class="btn btn-outline-info" data-filter="stripe">
+                            <i class="fas fa-credit-card me-1"></i> Tarjeta
+                        </button>
+                        <button class="btn btn-outline-secondary" data-filter="oxxo">
+                            <i class="fas fa-store me-1"></i> OXXO
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control" id="search-orders" placeholder="Buscar pedido...">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Lista de Pedidos -->
+        <div id="orders-list">
+            {% if ordenes %}
+                {% for orden in ordenes %}
+                <div class="order-card" data-status="{{ orden.estado }}" data-method="{{ orden.metodo_pago }}" data-id="{{ orden.id }}">
+                    <!-- Encabezado del pedido -->
+                    <div class="order-header">
+                        <div>
+                            <h5 class="mb-1">Pedido #{{ orden.id }}</h5>
+                            <p class="mb-0 text-muted small">
+                                <i class="far fa-calendar me-1"></i>
+                                {{ orden.fecha_creacion|date:"d/m/Y H:i" }}
+                            </p>
+                        </div>
+                        <div class="text-end">
+                            <div class="mb-2">
+                                <span class="status-badge status-{{ orden.estado }}">
+                                    {{ orden.get_estado_display }}
+                                </span>
+                                <span class="payment-method-badge ms-2">
+                                    <i class="fas fa-{{ orden.metodo_pago == 'stripe'|yesno:'credit-card,store' }} me-1"></i>
+                                    {{ orden.get_metodo_pago_display }}
+                                </span>
+                            </div>
+                            <h4 class="mb-0" style="color: var(--primary-brown);">${{ orden.total|floatformat:2 }}</h4>
+                        </div>
+                    </div>
+                    
+                    <!-- Cuerpo del pedido -->
+                    <div class="order-body">
+                        <!-- Productos -->
+                        <div class="order-items">
+                            <h6 class="mb-3"><i class="fas fa-cookie me-2"></i> Productos:</h6>
+                            {% for item in orden.items.all|slice:":3" %}
+                            <div class="order-item">
+                                <div>
+                                    <strong>{{ item.nombre_producto }}</strong>
+                                    <span class="text-muted small ms-2">x{{ item.cantidad }}</span>
+                                </div>
+                                <div>${{ item.subtotal|floatformat:2 }}</div>
+                            </div>
+                            {% endfor %}
+                            
+                            {% if orden.items.count > 3 %}
+                            <div class="text-center mt-2">
+                                <button class="btn btn-sm btn-link" type="button" data-bs-toggle="collapse" 
+                                        data-bs-target="#moreItems{{ orden.id }}">
+                                    <i class="fas fa-chevron-down me-1"></i>
+                                    Ver {{ orden.items.count|add:"-3" }} producto{{ orden.items.count|add:"-3"|pluralize }} más
+                                </button>
+                                
+                                <div class="collapse mt-2" id="moreItems{{ orden.id }}">
+                                    {% for item in orden.items.all|slice:"3:" %}
+                                    <div class="order-item">
+                                        <div>
+                                            <strong>{{ item.nombre_producto }}</strong>
+                                            <span class="text-muted small ms-2">x{{ item.cantidad }}</span>
+                                        </div>
+                                        <div>${{ item.subtotal|floatformat:2 }}</div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Línea de tiempo -->
+                        <div class="order-timeline">
+                            <h6 class="mb-3"><i class="fas fa-map-signs me-2"></i> Progreso:</h6>
+                            
+                            <div class="timeline-step {% if orden.estado != 'cancelado' %}completed{% endif %}">
+                                <div class="timeline-date">{{ orden.fecha_creacion|date:"d/m H:i" }}</div>
+                                <div class="timeline-text">Pedido realizado</div>
+                            </div>
+                            
+                            <div class="timeline-step {% if orden.estado == 'completado' %}completed{% elif orden.estado == 'pendiente' %}current{% endif %}">
+                                <div class="timeline-date">
+                                    {% if orden.estado == 'completado' %}
+                                        {{ orden.fecha_creacion|date:"d/m H:i" }}
+                                    {% endif %}
+                                </div>
+                                <div class="timeline-text">
+                                    {% if orden.estado == 'completado' %}
+                                        Pago confirmado
+                                    {% elif orden.estado == 'pendiente' %}
+                                        <span class="text-warning">Pendiente de pago</span>
+                                    {% else %}
+                                        Pago cancelado
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            {% if orden.estado == 'completado' %}
+                            <div class="timeline-step completed">
+                                <div class="timeline-date">{% now "d/m" %} 10:30</div>
+                                <div class="timeline-text">En preparación</div>
+                            </div>
+                            
+                            <div class="timeline-step">
+                                <div class="timeline-date">Próximamente</div>
+                                <div class="timeline-text">En camino</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Acciones -->
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                            <div class="action-buttons">
+                                <a href="{% url 'recibo' orden.id %}" class="btn-order-action btn-view">
+                                    <i class="fas fa-file-invoice me-1"></i> Ver Recibo
+                                </a>
+                                
+                                {% if orden.estado == 'completado' %}
+                                <button class="btn-order-action btn-reorder">
+                                    <i class="fas fa-redo me-1"></i> Volver a Pedir
+                                </button>
+                                
+                                <button class="btn-order-action btn-rate">
+                                    <i class="fas fa-star me-1"></i> Calificar
+                                </button>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="text-muted small">
+                                {% if orden.metodo_pago == 'oxxo' and orden.oxxo_referencia %}
+                                <i class="fas fa-barcode me-1"></i> Ref: {{ orden.oxxo_referencia }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Estado vacío -->
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <h3 class="mb-3">No hay pedidos aún</h3>
+                    <p class="text-muted mb-4">Parece que aún no has realizado compras en nuestra tienda.</p>
+                    <a href="{% url 'galleta' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-cookie me-2"></i> Ver Galletas
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Paginación -->
+        {% if ordenes.has_other_pages %}
+        <div class="pagination-container no-print">
+            <nav aria-label="Navegación de pedidos">
+                <ul class="pagination">
+                    {% if ordenes.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1" aria-label="Primera">
+                            <i class="fas fa-angle-double-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ ordenes.previous_page_number }}" aria-label="Anterior">
+                            <i class="fas fa-angle-left"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    
+                    {% for num in ordenes.paginator.page_range %}
+                        {% if ordenes.number == num %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ num }}</span>
+                        </li>
+                        {% elif num > ordenes.number|add:'-3' and num < ordenes.number|add:'3' %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if ordenes.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ ordenes.next_page_number }}" aria-label="Siguiente">
+                            <i class="fas fa-angle-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ ordenes.paginator.num_pages }}" aria-label="Última">
+                            <i class="fas fa-angle-double-right"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+        
+        <!-- Información adicional -->
+        <div class="card border-0 shadow-sm mt-4">
+            <div class="card-body">
+                <h6 class="mb-3"><i class="fas fa-question-circle me-2"></i> Preguntas frecuentes</h6>
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                ¿Cuánto tiempo se guarda mi historial de pedidos?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Tu historial de pedidos se guarda indefinidamente. Puedes acceder a él en cualquier momento desde esta sección.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                ¿Puedo cancelar un pedido ya realizado?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Los pedidos solo pueden cancelarse dentro de la primera hora después de realizada la compra. 
+                                Después de ese tiempo, el pedido entra en proceso de preparación.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (si existe) -->
+    {% if 'includes/footer.html'|template_exists %}
+        {% include 'includes/footer.html' %}
+    {% endif %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Filtrado de pedidos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filtros por botón
+            document.querySelectorAll('[data-filter]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Activar botón seleccionado
+                    document.querySelectorAll('[data-filter]').forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.classList.add('btn-outline-primary');
+                    });
+                    
+                    this.classList.add('active');
+                    this.classList.remove('btn-outline-primary');
+                    this.classList.add('btn-primary');
+                    
+                    // Filtrar pedidos
+                    filterOrders(filter);
+                });
+            });
+            
+            // Búsqueda en tiempo real
+            const searchInput = document.getElementById('search-orders');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    filterOrders('all', searchTerm);
+                });
+            }
+            
+            // Función para filtrar pedidos
+            function filterOrders(statusFilter, searchTerm = '') {
+                const orders = document.querySelectorAll('.order-card');
+                let visibleCount = 0;
+                
+                orders.forEach(order => {
+                    const orderStatus = order.getAttribute('data-status');
+                    const orderMethod = order.getAttribute('data-method');
+                    const orderId = order.getAttribute('data-id');
+                    const orderText = order.textContent.toLowerCase();
+                    
+                    let shouldShow = true;
+                    
+                    // Filtrar por estado
+                    if (statusFilter !== 'all') {
+                        if (statusFilter === 'stripe' || statusFilter === 'oxxo') {
+                            shouldShow = orderMethod === statusFilter;
+                        } else {
+                            shouldShow = orderStatus === statusFilter;
+                        }
+                    }
+                    
+                    // Filtrar por búsqueda
+                    if (searchTerm && !orderText.includes(searchTerm) && !orderId.includes(searchTerm)) {
+                        shouldShow = false;
+                    }
+                    
+                    // Mostrar u ocultar
+                    if (shouldShow) {
+                        order.style.display = 'block';
+                        visibleCount++;
+                        
+                        // Animación de entrada
+                        order.style.opacity = '0';
+                        order.style.transform = 'translateY(20px)';
+                        
+                        setTimeout(() => {
+                            order.style.transition = 'all 0.5s ease';
+                            order.style.opacity = '1';
+                            order.style.transform = 'translateY(0)';
+                        }, 50);
+                    } else {
+                        order.style.display = 'none';
+                    }
+                });
+                
+                // Mostrar estado vacío si no hay resultados
+                const emptyState = document.querySelector('.empty-state');
+                const ordersList = document.getElementById('orders-list');
+                
+                if (visibleCount === 0 && !emptyState) {
+                    const noResultsHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <h3 class="mb-3">No se encontraron pedidos</h3>
+                            <p class="text-muted mb-4">No hay pedidos que coincidan con tus criterios de búsqueda.</p>
+                            <button class="btn btn-primary" onclick="resetFilters()">
+                                <i class="fas fa-redo me-2"></i> Limpiar filtros
+                            </button>
+                        </div>
+                    `;
+                    
+                    if (ordersList.querySelector('.order-card')) {
+                        ordersList.innerHTML = noResultsHTML;
+                    }
+                } else if (emptyState && visibleCount > 0) {
+                    emptyState.remove();
+                }
+            }
+            
+            // Reiniciar filtros
+            window.resetFilters = function() {
+                document.querySelectorAll('[data-filter]').forEach(btn => {
+                    btn.classList.remove('active', 'btn-primary');
+                    btn.classList.add('btn-outline-primary');
+                });
+                
+                document.querySelector('[data-filter="all"]').classList.add('active', 'btn-primary');
+                document.getElementById('search-orders').value = '';
+                filterOrders('all');
+            };
+            
+            // Efecto de carga inicial
+            const orders = document.querySelectorAll('.order-card');
+            orders.forEach((order, index) => {
+                order.style.opacity = '0';
+                order.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    order.style.transition = 'all 0.5s ease';
+                    order.style.opacity = '1';
+                    order.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+            
+            // Función para volver a pedir
+            window.reorder = function(orderId) {
+                if (confirm('¿Deseas agregar los productos de este pedido a tu carrito?')) {
+                    // Aquí iría la lógica para reordenar
+                    // Por ahora solo mostramos un mensaje
+                    alert('Los productos se han agregado a tu carrito');
+                }
+            };
+            
+            // Configurar botones de reordenar
+            document.querySelectorAll('.btn-reorder').forEach(button => {
+                button.addEventListener('click', function() {
+                    const orderCard = this.closest('.order-card');
+                    const orderId = orderCard.getAttribute('data-id');
+                    reorder(orderId);
+                });
+            });
+            
+            // Función para exportar historial
+            window.exportHistory = function(format) {
+                alert(`Exportando historial en formato ${format.toUpperCase()}...\n(Esta funcionalidad estaría conectada al backend)`);
+            };
+        });
+        
+        // Imprimir historial con estilo
+        window.onbeforeprint = function() {
+            document.querySelectorAll('.order-card').forEach(card => {
+                card.style.boxShadow = 'none';
+                card.style.border = '1px solid #ddd';
+                card.style.marginBottom = '20px';
+            });
+        };
+        
+        window.onafterprint = function() {
+            document.querySelectorAll('.order-card').forEach(card => {
+                card.style.boxShadow = '';
+                card.style.border = '';
+                card.style.marginBottom = '';
+            });
+        };
+        
+        // Actualizar estadísticas en tiempo real
+        function updateStats() {
+            const completedOrders = document.querySelectorAll('[data-status="completado"]').length;
+            const pendingOrders = document.querySelectorAll('[data-status="pendiente"]').length;
+            const cancelledOrders = document.querySelectorAll('[data-status="cancelado"]').length;
+            const totalOrders = completedOrders + pendingOrders + cancelledOrders;
+            
+            // Actualizar contadores si existen
+            const statElements = {
+                'total_orders': totalOrders,
+                'completed_orders': completedOrders,
+                'pending_orders': pendingOrders,
+                'cancelled_orders': cancelledOrders
+            };
+            
+            for (const [id, value] of Object.entries(statElements)) {
+                const element = document.getElementById(id);
+                if (element) {
+                    const currentValue = parseInt(element.textContent);
+                    if (currentValue !== value) {
+                        animateCounter(element, currentValue, value);
+                    }
+                }
+            }
+        }
+        
+        // Animación de contadores
+        function animateCounter(element, start, end) {
+            const duration = 1000;
+            const steps = 60;
+            const stepValue = (end - start) / steps;
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += stepValue;
+                if ((stepValue > 0 && current >= end) || (stepValue < 0 && current <= end)) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.round(current);
+            }, duration / steps);
+        }
+        
+        // Actualizar estadísticas cuando se filtren pedidos
+        document.querySelectorAll('[data-filter]').forEach(button => {
+            button.addEventListener('click', updateStats);
+        });
+    </script>
+</body>
+</html>

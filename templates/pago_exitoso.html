@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Pago Exitoso! - Dalgona Cookies</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-brown: #8b5a2b;
+            --secondary-gold: #e8a628;
+            --success-green: #28a745;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0fff4 0%, #e6ffe6 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .success-container {
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+        
+        .success-card {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(40, 167, 69, 0.15);
+            overflow: hidden;
+            text-align: center;
+            padding: 3rem;
+            position: relative;
+            border: 3px solid var(--success-green);
+        }
+        
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            background: var(--success-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: white;
+            font-size: 4rem;
+            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 15px 40px rgba(40, 167, 69, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3); }
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--secondary-gold);
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+        
+        .btn-action {
+            background: linear-gradient(135deg, var(--primary-brown) 0%, var(--secondary-gold) 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(139, 90, 43, 0.3);
+            color: white;
+        }
+        
+        .order-details {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .email-notification {
+            background: linear-gradient(135deg, #e6f7ff 0%, #f0f9ff 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 5px solid var(--primary-brown);
+        }
+        
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+            color: white;
+        }
+        
+        .tracking-code {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--primary-brown);
+            background: #f9f5f0;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    {% include 'includes/navbar.html' %}
+
+    <!-- Contenido Principal -->
+    <div class="success-container">
+        <div class="success-card">
+            <!-- Confeti animado -->
+            <div id="confetti-container"></div>
+            
+            <!-- Icono de éxito -->
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            
+            <!-- Mensaje -->
+            <h1 class="mb-3" style="color: var(--success-green);">¡Pago Exitoso!</h1>
+            <h4 class="mb-4">Gracias por tu compra en Dalgona Cookies</h4>
+            
+            <!-- Detalles de la orden -->
+            <div class="order-details">
+                <h5 class="mb-3"><i class="fas fa-receipt me-2"></i> Detalles de tu orden:</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-2"><strong>Número de Orden:</strong></p>
+                        <p class="tracking-code">#{{ orden.id|default:"XXXXXX" }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-2"><strong>Total Pagado:</strong></p>
+                        <h3 style="color: var(--primary-brown);">${{ orden.total|floatformat:2|default:"0.00" }}</h3>
+                    </div>
+                </div>
+                <p class="mb-0 small text-muted">
+                    <i class="fas fa-clock me-1"></i> 
+                    Fecha: {{ orden.fecha_creacion|date:"d/m/Y H:i"|default:"Hoy" }}
+                </p>
+            </div>
+            
+            <!-- Notificación de email -->
+            <div class="email-notification">
+                <div class="d-flex align-items-start">
+                    <i class="fas fa-envelope fa-2x me-3" style="color: var(--primary-brown);"></i>
+                    <div>
+                        <h6 class="mb-2">¡Recibo enviado!</h6>
+                        <p class="mb-0 small">
+                            Hemos enviado el recibo de tu compra a 
+                            <strong>{{ orden.usuario.email|default:"tu correo" }}</strong>.
+                            Revisa tu bandeja de entrada y spam.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Información de seguimiento -->
+            <div class="alert alert-info">
+                <h6><i class="fas fa-shipping-fast me-2"></i> Información de envío:</h6>
+                <ul class="mb-0 small">
+                    <li>Tu pedido será procesado en las próximas 24 horas</li>
+                    <li>Recibirás un correo con el código de seguimiento</li>
+                    <li>Tiempo de entrega estimado: 2-3 días hábiles</li>
+                    <li>Para dudas: soporte@dalgona-cookies.com</li>
+                </ul>
+            </div>
+            
+            <!-- Acciones -->
+            <div class="d-flex flex-wrap justify-content-center mt-4">
+                <a href="{% url 'recibo' orden.id|default:'0' %}" class="btn-action">
+                    <i class="fas fa-file-invoice me-2"></i> Ver Recibo
+                </a>
+                
+                <a href="{% url 'home' %}" class="btn-action" style="background: #6c757d;">
+                    <i class="fas fa-home me-2"></i> Ir al Inicio
+                </a>
+                
+                <a href="{% url 'historial_pedidos' %}" class="btn-action" style="background: #17a2b8;">
+                    <i class="fas fa-history me-2"></i> Ver Historial
+                </a>
+                
+                <button class="whatsapp-btn" onclick="shareWhatsApp()">
+                    <i class="fab fa-whatsapp me-2"></i> Compartir
+                </button>
+            </div>
+            
+            <!-- Mensaje final -->
+            <p class="mt-4 mb-0 text-muted">
+                <i class="fas fa-heart me-1" style="color: #e74c3c;"></i>
+                ¡Gracias por confiar en Dalgona Cookies! Tu satisfacción es nuestra prioridad.
+            </p>
+        </div>
+        
+        <!-- Sección de recomendaciones -->
+        <div class="card border-0 shadow-sm mt-4">
+            <div class="card-body text-center">
+                <h5 class="mb-3"><i class="fas fa-cookie-bite me-2"></i> ¿Quieres más galletas?</h5>
+                <p class="mb-3">Descubre nuestras nuevas variedades y promociones especiales</p>
+                <a href="{% url 'galleta' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-shopping-bag me-2"></i> Ver Más Galletas
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (si existe) -->
+    {% if 'includes/footer.html'|template_exists %}
+        {% include 'includes/footer.html' %}
+    {% endif %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Crear confeti animado
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#8b5a2b', '#e8a628', '#28a745', '#17a2b8', '#e74c3c'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 20 + 10 + 'px';
+                confetti.style.height = confetti.style.width;
+                container.appendChild(confetti);
+                
+                // Animación
+                setTimeout(() => {
+                    confetti.style.transition = 'all 1s ease';
+                    confetti.style.opacity = '1';
+                    confetti.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(${Math.random() * 360}deg)`;
+                    
+                    // Desvanecer
+                    setTimeout(() => {
+                        confetti.style.opacity = '0';
+                        setTimeout(() => confetti.remove(), 1000);
+                    }, 2000);
+                }, i * 100);
+            }
+            
+            // Repetir la animación
+            setTimeout(createConfetti, 3000);
+        }
+        
+        // Compartir por WhatsApp
+        function shareWhatsApp() {
+            const orderNumber = '{{ orden.id|default:"XXXXXX" }}';
+            const total = '{{ orden.total|floatformat:2|default:"0.00" }}';
+            const message = `¡Acabo de comprar en Dalgona Cookies! 🍪\nOrden: #${orderNumber}\nTotal: $${total}\n¡Las galletas están deliciosas!`;
+            const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+        
+        // Animación de entrada
+        document.addEventListener('DOMContentLoaded', function() {
+            const successCard = document.querySelector('.success-card');
+            
+            // Estado inicial
+            successCard.style.opacity = '0';
+            successCard.style.transform = 'translateY(50px) scale(0.9)';
+            
+            // Animación
+            setTimeout(() => {
+                successCard.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                successCard.style.opacity = '1';
+                successCard.style.transform = 'translateY(0) scale(1)';
+                
+                // Iniciar confeti después de la animación principal
+                setTimeout(createConfetti, 500);
+                
+                // Efecto en el ícono
+                const icon = document.querySelector('.success-icon');
+                setTimeout(() => {
+                    icon.style.transform = 'scale(1.2)';
+                    setTimeout(() => {
+                        icon.style.transform = 'scale(1)';
+                    }, 300);
+                }, 800);
+            }, 300);
+            
+            // Mostrar número de orden con efecto de escritura
+            const orderNumber = '{{ orden.id|default:"000000" }}';
+            if (orderNumber !== '000000') {
+                const trackingElement = document.querySelector('.tracking-code');
+                if (trackingElement) {
+                    let current = '';
+                    let i = 0;
+                    const typingEffect = setInterval(() => {
+                        if (i <= orderNumber.length) {
+                            current = orderNumber.substring(0, i);
+                            trackingElement.textContent = '#' + current;
+                            i++;
+                        } else {
+                            clearInterval(typingEffect);
+                        }
+                    }, 100);
+                }
+            }
+        });
+        
+        // Auto-redirección después de 30 segundos (opcional)
+        setTimeout(() => {
+            // Solo redirigir si el usuario no ha interactuado
+            if (!document.hasFocus()) {
+                window.location.href = "{% url 'home' %}";
+            }
+        }, 30000);
+    </script>
+</body>
+</html>

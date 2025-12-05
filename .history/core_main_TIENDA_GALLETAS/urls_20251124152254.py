@@ -35,4 +35,3 @@ urlpatterns = [
 
     path('accounts/', include('accounts.urls')),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
