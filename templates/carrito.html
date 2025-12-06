@@ -5,151 +5,151 @@
 {% block content %}
 
 <style>
-.cart-container {
-    max-width: 1000px;
-    margin: 0 auto;
-}
+    .cart-container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
 
-.cart-header {
-    background: linear-gradient(135deg, #59321c, #3b2414);
-    color: white;
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 30px;
-}
+    .cart-header {
+        background: linear-gradient(135deg, #59321c, #3b2414);
+        color: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
 
-.cart-item {
-    background: #ffffff;
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    border: 1px solid #eaeaea;
-    transition: transform 0.3s ease;
-}
+    .cart-item {
+        background: #ffffff;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border: 1px solid #eaeaea;
+        transition: transform 0.3s ease;
+    }
 
-.cart-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-}
+    .cart-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
 
-.cookie-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #f0e6e0;
-}
+    .cookie-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #f0e6e0;
+    }
 
-.quantity-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+    .quantity-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-.quantity-btn {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    border: 2px solid #59321c;
-    background: white;
-    color: #59321c;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
+    .quantity-btn {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #59321c;
+        background: white;
+        color: #59321c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
 
-.quantity-btn:hover {
-    background: #59321c;
-    color: white;
-}
+    .quantity-btn:hover {
+        background: #59321c;
+        color: white;
+    }
 
-.quantity-input {
-    width: 60px;
-    text-align: center;
-    border: 2px solid #eaeaea;
-    border-radius: 10px;
-    padding: 5px;
-}
+    .quantity-input {
+        width: 60px;
+        text-align: center;
+        border: 2px solid #eaeaea;
+        border-radius: 10px;
+        padding: 5px;
+    }
 
-.remove-btn {
-    background: #dc3545;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-}
+    .remove-btn {
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
 
-.remove-btn:hover {
-    background: #c82333;
-    transform: scale(1.05);
-}
+    .remove-btn:hover {
+        background: #c82333;
+        transform: scale(1.05);
+    }
 
-.cart-summary {
-    background: #f8f9fa;
-    border-radius: 15px;
-    padding: 25px;
-    border: 2px solid #eaeaea;
-}
+    .cart-summary {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 25px;
+        border: 2px solid #eaeaea;
+    }
 
-.summary-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #dee2e6;
-}
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #dee2e6;
+    }
 
-.total-price {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #59321c;
-}
+    .total-price {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #59321c;
+    }
 
-.checkout-btn {
-    background: linear-gradient(135deg, #28a745, #20c997);
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 12px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    width: 100%;
-    transition: all 0.3s ease;
-}
+    .checkout-btn {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
 
-.checkout-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
-}
+    .checkout-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    }
 
-.empty-cart {
-    text-align: center;
-    padding: 60px 20px;
-}
+    .empty-cart {
+        text-align: center;
+        padding: 60px 20px;
+    }
 
-.empty-cart-icon {
-    font-size: 4rem;
-    margin-bottom: 20px;
-}
+    .empty-cart-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+    }
 
-.continue-shopping {
-    background: linear-gradient(135deg, #0d6efd, #0a58ca);
-    color: white;
-    text-decoration: none;
-    padding: 12px 30px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-}
+    .continue-shopping {
+        background: linear-gradient(135deg, #0d6efd, #0a58ca);
+        color: white;
+        text-decoration: none;
+        padding: 12px 30px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
 
-.continue-shopping:hover {
-    color: white;
-    transform: translateY(-2px);
-    text-decoration: none;
-}
+    .continue-shopping:hover {
+        color: white;
+        transform: translateY(-2px);
+        text-decoration: none;
+    }
 </style>
 
 <div class="cart-container">
@@ -163,149 +163,181 @@
     <div class="row">
         <!-- Lista de Productos -->
         <div class="col-lg-8">
-            {% for item in cart_items %}
-            <div class="cart-item">
-                <div class="row align-items-center">
-                    <div class="col-md-2">
-                        {% if item.galleta.imagen %}
-                            <img src="{{ item.galleta.imagen.url }}" class="cookie-image" alt="{{ item.galleta.nombre }}">
-                        {% else %}
-                            <img src="https://images.unsplash.com/photo-1436564989038-18b9958df72b" class="cookie-image" alt="{{ item.galleta.nombre }}">
-                        {% endif %}
-                    </div>
-                    <div class="col-md-4">
-                        <h5 class="mb-1">{{ item.galleta.nombre }}</h5>
-                        <p class="text-muted mb-0 small">{{ item.galleta.descripcion }}</p>
-                    </div>
-                    <div class="col-md-2">
-                        <span class="h6">${{ item.galleta.precio }}</span>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="quantity-controls">
-                            <button class="quantity-btn" onclick="updateQuantity({{ item.id }}, -1)">-</button>
-                            <input type="number" class="quantity-input" value="{{ item.cantidad }}" 
-                                   min="1" max="{{ item.galleta.stock }}" 
-                                   onchange="updateQuantity({{ item.id }}, 0, this.value)">
-                            <button class="quantity-btn" onclick="updateQuantity({{ item.id }}, 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                        <button class="remove-btn" onclick="removeFromCart({{ item.id }})">
-                            🗑️
-                        </button>
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-12 text-end">
-                        <strong>Subtotal: ${{ item.subtotal }}</strong>
-                    </div>
+    {% for item in cart_items %}
+    <div class="cart-item">
+        <div class="row align-items-center">
+
+            <!-- Imagen -->
+            <div class="col-md-2 text-center">
+                {% if item.galleta.imagen %}
+                <img src="{{ item.galleta.imagen.url }}" class="cookie-image" alt="{{ item.galleta.nombre }}">
+                {% else %}
+                <img src="https://images.unsplash.com/photo-1436564989038-18b9958df72b"
+                    class="cookie-image" alt="{{ item.galleta.nombre }}">
+                {% endif %}
+            </div>
+
+            <!-- Nombre y descripción -->
+            <div class="col-md-4">
+                <h5 class="mb-1">{{ item.galleta.nombre }}</h5>
+                <p class="text-muted small mb-0">{{ item.galleta.descripcion }}</p>
+            </div>
+
+            <!-- Precio -->
+            <div class="col-md-2">
+                <span class="h6">${{ item.galleta.precio }}</span>
+            </div>
+
+            <!-- Controles -->
+            <div class="col-md-3">
+                <div class="quantity-controls">
+                    <button class="quantity-btn" onclick="updateQuantity('{{ item.id }}', -1)">-</button>
+
+                    <input type="number" class="quantity-input"
+                            value="{{ item.cantidad }}"
+                            min="1" max="{{ item.galleta.stock }}"
+                            onchange="updateQuantity('{{ item.id }}', 0, this.value)">
+
+                    <button class="quantity-btn" onclick="updateQuantity('{{ item.id }}', 1)">+</button>
                 </div>
             </div>
-            {% endfor %}
+
+            <!-- Eliminar -->
+            <div class="col-md-1 text-end">
+                <button class="remove-btn" onclick="removeFromCart('{{ item.id }}')">
+                    ✕
+                </button>
+            </div>
         </div>
 
-        <!-- Resumen del Pedido -->
-        <div class="col-lg-4">
-            <div class="cart-summary">
-                <h4 class="mb-4">Resumen del Pedido</h4>
-                
-                <div class="summary-item">
-                    <span>Subtotal:</span>
-                    <span>${{ subtotal }}</span>
-                </div>
-                
-                <div class="summary-item">
-                    <span>Envío:</span>
-                    <span>${{ envio }}</span>
-                </div>
-                
-                <div class="summary-item">
-                    <span>Descuento:</span>
-                    <span class="text-success">-${{ descuento }}</span>
-                </div>
-                
-                <div class="summary-item total-price">
-                    <span>Total:</span>
-                    <span>${{ total }}</span>
-                </div>
-
-                <div class="mt-4">
-                    <button class="checkout-btn" onclick="proceedToCheckout()">
-                        🎉 Proceder al Pago
-                    </button>
-                </div>
-
-                <div class="mt-3 text-center">
-                    <a href="{% url 'galleta' %}" class="continue-shopping">
-                        ← Seguir Comprando
-                    </a>
-                </div>
+        <div class="row mt-2">
+            <div class="col-12 text-end">
+                <strong>Subtotal: ${{ item.subtotal }}</strong>
             </div>
         </div>
     </div>
-    {% else %}
-    <!-- Carrito Vacío -->
-    <div class="empty-cart">
-        <div class="empty-cart-icon">🛒</div>
-        <h3 class="mb-3">Tu carrito está vacío</h3>
-        <p class="text-muted mb-4">¡Descubre nuestras deliciosas galletas y agrega algunas a tu carrito!</p>
-        <a href="{% url 'galleta' %}" class="continue-shopping">
-            Explorar Galletas
-        </a>
-    </div>
-    {% endif %}
+    {% endfor %}
 </div>
 
-<script>
-function updateQuantity(itemId, change, newValue = null) {
-    let quantityInput = event.target.closest('.quantity-controls').querySelector('.quantity-input');
-    let currentQuantity = parseInt(quantityInput.value);
-    let newQuantity;
+<div class="col-lg-4">
+    <div class="cart-summary">
+        <h4 class="mb-3">Resumen del Pedido</h4>
 
-    if (newValue !== null) {
-        newQuantity = parseInt(newValue);
-    } else {
-        newQuantity = currentQuantity + change;
-    }
+        <div class="summary-item">
+            <span>Subtotal:</span>
+            <span>${{ subtotal }}</span>
+        </div>
 
-    // Validar que la cantidad sea al menos 1
-    if (newQuantity < 1) newQuantity = 1;
+        <div class="summary-item">
+            <span>Envío:</span>
+            <span>${{ envio }}</span>
+        </div>
 
-    // Enviar la actualización al servidor
-    fetch(`/carrito/actualizar/${itemId}/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRFToken': '{{ csrf_token }}'
-        },
-        body: `cantidad=${newQuantity}`
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Actualizar los totales en la página
-            window.location.reload();
-        } else {
-            alert(data.error);
+        <div class="summary-item">
+            <span>Total:</span>
+            <span class="total-price">${{ total }}</span>
+        </div>
+
+        <!-- Botón corregido que lleva a la vista de pago -->
+        <a href="{% url 'seleccionar_pago' %}" 
+            class="checkout-btn mt-3"
+            style="display:block; text-align:center;">
+            Proceder al Pago
+        </a>
+    </div>
+</div>
+
+{% else %}
+<!-- Carrito Vacío -->
+<div class="empty-cart">
+    <div class="empty-cart-icon">🛒</div>
+    <h3 class="mb-3">Tu carrito está vacío</h3>
+    <p class="text-muted mb-4">¡Descubre nuestras deliciosas galletas y agrega algunas a tu carrito!</p>
+    <a href="{% url 'galleta' %}" class="continue-shopping">
+        Explorar Galletas
+    </a>
+</div>
+{% endif %}
+
+
+    <script>
+        // =============================
+        // Obtener CSRF desde cookies
+        // =============================
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let cookie of cookies) {
+                    cookie = cookie.trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error al actualizar la cantidad');
-    });
-}
 
-function removeFromCart(itemId) {
-    if (confirm('¿Estás seguro de que quieres eliminar este producto del carrito?')) {
-        // CORREGIDO: usar 'eliminar_del_carrito' en lugar de 'remove_from_cart'
-        window.location.href = `{% url 'eliminar_del_carrito' 0 %}`.replace('0', itemId);
-    }
-}
+        const csrftoken = getCookie('csrftoken');
 
-function proceedToCheckout() {
-    // Redirigir a la página de pago
-    window.location.href = "{% url 'pago' %}";
-}
-</script>
+        // =============================
+        // Actualizar cantidad
+        // =============================
+        function updateQuantity(itemId, change, newValue = null, element) {
+            let quantityInput = element.closest('.quantity-controls').querySelector('.quantity-input');
+            let currentQuantity = parseInt(quantityInput.value);
+            let newQuantity;
 
-{% endblock %}
+            // Si vino un valor manual
+            if (newValue !== null) {
+                newQuantity = parseInt(newValue);
+            } else {
+                newQuantity = currentQuantity + change;
+            }
+
+            // Validar mínimo 1
+            if (newQuantity < 1) newQuantity = 1;
+
+            // Enviar actualización
+            fetch(`/carrito/actualizar/${itemId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrftoken
+                },
+                body: `cantidad=${newQuantity}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        alert(data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Error al actualizar la cantidad");
+                });
+        }
+
+        // =============================
+        // Eliminar del carrito
+        // =============================
+        function removeFromCart(itemId) {
+            if (confirm("¿Estás seguro de eliminar este producto del carrito?")) {
+                window.location.href = `/carrito/eliminar/${itemId}/`;
+            }
+        }
+
+        // =============================
+        // Proceder al pago
+        // =============================
+        function proceedToCheckout() {
+            window.location.href = "{% url 'pago' %}";
+        }
+    </script>
+
+
+    {% endblock %}
