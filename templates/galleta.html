@@ -4,7 +4,8 @@
 {% block title %}Galletas - Dalgona Cookies{% endblock %}
 
 {% block content %}
-<!-- Header del catálogo -->
+
+<!-- ======================== HEADER ======================== -->
 <div class="container-fluid py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); border-bottom: 1px solid #eaeaea;">
     <div class="container">
         <div class="row align-items-center">
@@ -13,17 +14,8 @@
                     Nuestro Catálogo de Galletas
                 </h1>
                 <p class="lead mb-4" style="color: #7f8c8d;">
-                    Descubre nuestra exclusiva selección de galletas gourmet, horneadas artesanalmente con ingredientes de la más alta calidad.
+                    Descubre nuestra exclusiva selección de galletas gourmet.
                 </p>
-                <div class="d-flex align-items-center">
-                    <div class="me-4">
-                        <i class="fas fa-shipping-fast fa-2x" style="color: #8b5a2b;"></i>
-                    </div>
-                    <div>
-                        <h6 style="color: #2c3e50; margin-bottom: 5px;">Envío Gratis +$500</h6>
-                        <p class="small mb-0" style="color: #7f8c8d;">Calidad Premium | Frescas Diariamente</p>
-                    </div>
-                </div>
             </div>
             <div class="col-lg-6 text-center">
                 <div style="width: 200px; height: 200px; background: linear-gradient(135deg, #8b5a2b 0%, #e8a628 100%); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
@@ -34,65 +26,8 @@
     </div>
 </div>
 
-<!-- Filtros y búsqueda -->
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold" style="color: #2c3e50;">
-                                <i class="fas fa-list me-2"></i>Categoría
-                            </label>
-                            <select class="form-select" style="border-color: #e0e0e0;">
-                                <option selected>Todas las Galletas</option>
-                                <option value="1">Con Chispas de Chocolate</option>
-                                <option value="2">De Avena y Pasas</option>
-                                <option value="3">De Mantequilla</option>
-                                <option value="4">Sin Gluten</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold" style="color: #2c3e50;">
-                                <i class="fas fa-tag me-2"></i>Precio
-                            </label>
-                            <select class="form-select" style="border-color: #e0e0e0;">
-                                <option selected>Todos los Precios</option>
-                                <option value="1">Hasta $50</option>
-                                <option value="2">$50 - $100</option>
-                                <option value="3">$100 - $200</option>
-                                <option value="4">Más de $200</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold" style="color: #2c3e50;">
-                                <i class="fas fa-fire me-2"></i>Popularidad
-                            </label>
-                            <select class="form-select" style="border-color: #e0e0e0;">
-                                <option selected>Más Relevantes</option>
-                                <option value="1">Más Populares</option>
-                                <option value="2">Mejor Calificadas</option>
-                                <option value="3">Novedades</option>
-                            </select>
-                        </div>
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Buscar galletas..." style="border-color: #e0e0e0;">
-                                <button class="btn" type="button" style="background-color: #8b5a2b; color: white;">
-                                    <i class="fas fa-search"></i> Buscar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Catálogo de galletas -->
-<div class="container mb-5">
+<!-- ======================== CATÁLOGO ======================== -->
+<div class="container mb-5" style="padding-top: 60px;">
     {% if galletas %}
     <div class="row">
         {% for galleta in galletas %}
@@ -106,141 +41,129 @@
                         <i class="fas fa-cookie-bite fa-3x" style="color: #d4c1a6;"></i>
                     </div>
                     {% endif %}
-                    {% if galleta.destacado %}
-                    <span class="position-absolute top-0 start-0 m-3 badge" style="background-color: #e8a628; color: #2c3e50;">
-                        <i class="fas fa-star me-1"></i>Destacado
-                    </span>
-                    {% endif %}
                 </div>
+
                 <div class="card-body">
                     <h5 class="card-title mb-2" style="color: #2c3e50;">{{ galleta.nombre }}</h5>
                     <p class="card-text text-muted small mb-3">{{ galleta.descripcion|truncatechars:100 }}</p>
+
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <span class="fw-bold fs-5" style="color: #8b5a2b;">${{ galleta.precio }}</span>
-                        {% if galleta.stock > 0 %}
-                        <span class="badge" style="background-color: #27ae60; color: white;">
-                            <i class="fas fa-check me-1"></i>Disponible
-                        </span>
-                        {% else %}
-                        <span class="badge" style="background-color: #e74c3c; color: white;">
-                            <i class="fas fa-times me-1"></i>Agotado
-                        </span>
-                        {% endif %}
                     </div>
                 </div>
+
                 <div class="card-footer border-0 bg-white">
                     <div class="d-grid gap-2">
-                        {% if galleta.stock > 0 %}
-                        <button class="btn btn-sm" style="background-color: #8b5a2b; color: white;">
+
+                        <!-- Añadir al carrito -->
+                        <button class="btn btn-sm" style="background-color: #8b5a2b; color: white;"
+                                onclick="addToCart('{{ galleta.id }}')">
                             <i class="fas fa-shopping-cart me-2"></i>Añadir al Carrito
                         </button>
-                        {% else %}
-                        <button class="btn btn-sm btn-outline-secondary" disabled>
-                            <i class="fas fa-bell me-2"></i>Notificarme
-                        </button>
-                        {% endif %}
-                        <button class="btn btn-sm btn-outline" style="border-color: #8b5a2b; color: #8b5a2b;">
+
+                        <!-- === VER DETALLES (ABRE EL MODAL) === -->
+                        <button class="btn btn-sm btn-outline" style="border-color: #8b5a2b; color: #8b5a2b;"
+                            onclick="openDetailsModal('{{ galleta.nombre }}', '{{ galleta.descripcion|escapejs }}', '{{ galleta.precio }}', '{% if galleta.imagen %}{{ galleta.imagen.url }}{% else %}{% static 'img/no-image.png' %}{% endif %}')">
                             <i class="fas fa-eye me-2"></i>Ver Detalles
                         </button>
+
                     </div>
                 </div>
+
             </div>
         </div>
         {% endfor %}
     </div>
-    
-    <!-- Paginación -->
-    {% if galletas.has_other_pages %}
-    <nav aria-label="Page navigation" class="mt-4">
-        <ul class="pagination justify-content-center">
-            {% if galletas.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ galletas.previous_page_number }}" style="color: #8b5a2b;">
-                    <i class="fas fa-chevron-left"></i>
-                </a>
-            </li>
-            {% endif %}
-            
-            {% for num in galletas.paginator.page_range %}
-                {% if galletas.number == num %}
-                <li class="page-item active">
-                    <span class="page-link" style="background-color: #8b5a2b; border-color: #8b5a2b;">{{ num }}</span>
-                </li>
-                {% else %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ num }}" style="color: #8b5a2b;">{{ num }}</a>
-                </li>
-                {% endif %}
-            {% endfor %}
-            
-            {% if galletas.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ galletas.next_page_number }}" style="color: #8b5a2b;">
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
     {% endif %}
-    
-    {% else %}
-    <!-- Estado vacío -->
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card border-0 shadow-lg text-center py-5">
-                <div class="card-body">
-                    <i class="fas fa-cookie-bite fa-5x mb-4" style="color: #d4c1a6;"></i>
-                    <h3 class="card-title mb-3" style="color: #2c3e50;">No hay galletas disponibles en este momento</h3>
-                    <p class="card-text text-muted mb-4">
-                        Estamos horneando nuevas delicias para ti. Muy pronto tendrás a disposición nuestra exquisita selección de galletas premium recién horneadas.
-                    </p>
-                    <a href="{% url 'home' %}" class="btn" style="background-color: #8b5a2b; color: white;">
-                        <i class="fas fa-home me-2"></i>Volver al Inicio
-                    </a>
+</div>
+
+<!-- ======================== MODAL DINÁMICO ======================== -->
+<div class="modal fade" id="detalleGalletaModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 12px; overflow: hidden;">
+            
+            <div class="modal-header" style="background-color: #8b5a2b; color: white;">
+                <h5 class="modal-title" id="modalGalletaNombre"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center">
+                        <img id="modalGalletaImagen" src="" alt="Imagen" class="img-fluid rounded" style="max-height: 260px; object-fit: cover;">
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="fw-bold" style="color: #2c3e50;">Descripción</h4>
+                        <p id="modalGalletaDescripcion" class="text-muted"></p>
+
+                        <h4 class="fw-bold mt-3" style="color: #2c3e50;">Precio</h4>
+                        <p class="fs-4 fw-bold" id="modalGalletaPrecio" style="color: #8b5a2b;"></p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    {% endif %}
-</div>
 
-<!-- Beneficios de compra -->
-<div class="container-fluid py-4 mb-5" style="background-color: #e8d8c3;">
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-md-3 mb-3">
-                <i class="fas fa-shipping-fast fa-2x mb-2" style="color: #8b5a2b;"></i>
-                <h6 style="color: #2c3e50;">Envío Gratis +$500</h6>
+            <div class="modal-footer">
+                <button class="btn" style="background-color: #8b5a2b; color: white;" data-bs-dismiss="modal">
+                    Cerrar
+                </button>
             </div>
-            <div class="col-md-3 mb-3">
-                <i class="fas fa-shield-alt fa-2x mb-2" style="color: #8b5a2b;"></i>
-                <h6 style="color: #2c3e50;">Compra Segura</h6>
-            </div>
-            <div class="col-md-3 mb-3">
-                <i class="fas fa-undo fa-2x mb-2" style="color: #8b5a2b;"></i>
-                <h6 style="color: #2c3e50;">Devoluciones Fáciles</h6>
-            </div>
-            <div class="col-md-3 mb-3">
-                <i class="fas fa-headset fa-2x mb-2" style="color: #8b5a2b;"></i>
-                <h6 style="color: #2c3e50;">Soporte 24/7</h6>
-            </div>
+
         </div>
     </div>
 </div>
 
-<style>
-    .hover-lift {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+<!-- ======================== SCRIPTS ======================== -->
+
+<script>
+/* ---- Modal de detalles ---- */
+function openDetailsModal(nombre, descripcion, precio, imagenUrl) {
+    document.getElementById("modalGalletaNombre").innerText = nombre;
+    document.getElementById("modalGalletaDescripcion").innerText = descripcion;
+    document.getElementById("modalGalletaPrecio").innerText = "$" + precio;
+    document.getElementById("modalGalletaImagen").src = imagenUrl;
+
+    let modal = new bootstrap.Modal(document.getElementById("detalleGalletaModal"));
+    modal.show();
+}
+
+/* ---- Obtener CSRF ---- */
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + "=")) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            }
+        }
     }
-    
-    .hover-lift:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
-    }
-    
-    .card-img-top {
-        border-radius: 8px 8px 0 0;
-    }
-</style>
+    return cookieValue;
+}
+
+const csrftoken = getCookie("csrftoken");
+
+/* ---- Añadir al carrito ---- */
+function addToCart(galletaId) {
+    fetch("/carrito/agregar/" + galletaId + "/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken
+        },
+        body: JSON.stringify({})
+    })
+    .then(res => res.json())
+    .then(data => {
+        Swal.fire({
+            icon: "success",
+            title: "Agregado al carrito",
+            text: data.message,
+            showConfirmButton: false,
+            timer: 1500
+        });
+    });
+}
+</script>
+
 {% endblock %}

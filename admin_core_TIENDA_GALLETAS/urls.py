@@ -24,4 +24,7 @@ urlpatterns = [
     path('pago-stripe/webhook/', views.pago_stripe_webhook, name='stripe_webhook'),
     path('verificar-pago/<int:orden_id>/', views.verificar_pago, name='verificar_pago'),
     path('historial-pedidos/', views.historial_pedidos, name='historial_pedidos'),
+    path('pago-exitoso/', views.pago_exitoso, name='pago_exitoso'),
+
+
 ]

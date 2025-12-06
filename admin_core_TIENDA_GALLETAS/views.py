@@ -96,6 +96,10 @@ def galleta_view(request):
     }
     return render(request, 'galleta.html', context)
 
+def detalle_galleta(request, galleta_id):
+    galleta = get_object_or_404(Galleta, id=galleta_id)
+    return render(request, "detalle_galleta.html", {"galleta": galleta})
+
 @login_required
 def galleta_create(request):
     return render(request, "galleta_create.html")
@@ -149,31 +153,29 @@ def carrito(request):
 def agregar_al_carrito(request, galleta_id):
     if request.method == 'POST':
         carrito_session = request.session.get('carrito', {})
+
+        galleta = get_object_or_404(Galleta, id=galleta_id)
         galleta_str = str(galleta_id)
-        
-        galleta_data = {
-            '1': {'nombre': 'Galleta de Chocolate', 'precio': '18.00'},
-            '2': {'nombre': 'Galleta de Vainilla', 'precio': '15.00'},
-        }
-        
+
         cantidad = int(request.POST.get('cantidad', 1))
-        
+
         if galleta_str in carrito_session:
             carrito_session[galleta_str]['cantidad'] += cantidad
         else:
             carrito_session[galleta_str] = {
                 'cantidad': cantidad,
-                'nombre': galleta_data.get(galleta_str, {}).get('nombre', f'Galleta {galleta_id}'),
-                'precio': galleta_data.get(galleta_str, {}).get('precio', '15.00')
+                'nombre': galleta.nombre,
+                'precio': str(galleta.precio)  # ← AHORA VIENE DE LA BD
             }
-        
+
         request.session['carrito'] = carrito_session
         request.session.modified = True
-        
-        messages.success(request, f'¡{carrito_session[galleta_str]["nombre"]} agregado al carrito!')
+
+        messages.success(request, f'¡{galleta.nombre} agregado al carrito!')
         return redirect('carrito')
-    
+
     return redirect('galleta')
+
 
 def eliminar_del_carrito(request, item_id):
     carrito_session = request.session.get('carrito', {})
@@ -301,6 +303,10 @@ def seleccionar_metodo_pago(request):
         'total': total,
     }
     return render(request, 'seleccionar_pago.html', context)
+
+def pago_exitoso(request):
+    orden_id = request.GET.get("orden_id")
+    return render(request, "pago_exitoso.html", {"orden_id": orden_id})
 
 @login_required
 def pago_stripe(request):
